@@ -22,7 +22,7 @@ A smart traffic light system that is able to recognize, count, and determine the
 ### Vehicle Recognition
 * How will the Intersection node recognize vehicles at its intersection?
   * Google Maps API, or another source of live traffic data was considered. However after looking into how this information is collected and used, and possible ways to abuse the system<sup>[1]</sup>, we determined to not go with this route.
-  * The current plan is to use Object recognition to observe and recognize individual vehicles at each intersection. A set of fisheye lens cameras will be placed at each ingress point of the intersection. Using the feed from these cameras, the individual vehicles will be recognized using the Tensorflow machine learning platform, through the TensorFlow Object Detection API.
+  * The current plan is to use Object recognition to observe and recognize individual vehicles at each intersection. A set of fisheye lens cameras will be placed at each ingress point of the intersection. Using the feed from these cameras, the individual vehicles will be recognized using the Tensorflow<sup>[2]</sup> machine learning platform, through the TensorFlow Object Detection API<sup>[3]</sup>.
 * How will the Intersection node determine the directionality of the vehicles?
   * This will be achieved simply by determining which camera is observing the traffic. This becomes more complicated if a single central camera were used.
 ### Node Communication
@@ -36,3 +36,6 @@ A smart traffic light system that is able to recognize, count, and determine the
 
 ## References
 [1] https://www.theguardian.com/technology/2020/feb/03/berlin-artist-uses-99-phones-trick-google-maps-traffic-jam-alert
+[2] https://www.tensorflow.org/
+[3] https://github.com/tensorflow/models/tree/master/research/object_detection
+
