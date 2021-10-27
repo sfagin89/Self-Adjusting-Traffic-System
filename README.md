@@ -28,7 +28,10 @@ A smart traffic light system that is able to recognize, count, and determine the
   * This will be achieved simply by determining which camera is observing the traffic. This becomes more complicated if a single central camera were used.
 ### Node Communication
 * How will the Nodes communicate and share traffic information with each other?
+  * Considered whether a star topology or a mesh topology wuold work better. A star topology with a central device that communicated with all nodes would allow for a more resource/computationally heavy algorithm. However, this may introduce issues with speed of response times, as traffic information would have to be sent from each node to the central unit, run through an algorithm on that unit, and then sent back to all of the nodes.
+  * The current plan is use a partial mesh topology, allowing direct communication between the nodes, as well as providing link redundancy.
 * How will Nodes store traffic information received from other nodes?
+  * We are treating this similar to how network routers behave, where a routing table is formed based on route information received from other routers, and the best route is determined using a set of metrics dependent on the routing protocol in use. Similarly, the traffic information sent from other nodes will be stored, and the information later used by our Traffic Algortihm to determine the best way to route traffic by adjusting timing of traffic lights.
 ### Traffic Adjustment Algorithm
 * What algorithm will be used to determine how individual nodes should adjust their traffic light speeds to improve traffic conditions at their own and other intersections?
 
