@@ -38,7 +38,7 @@ A smart traffic light system that is able to recognize, count, and determine the
   * Microscopic traffic flow model vs Macroscopic traffic flow model
 
 ## Physical Prototype for Testing Setup
-![General Plan for Layout of SmartTraffic System Test](https://github.com/sfagin89/SmartTraffic/blob/main/TrafficIntersectionModel.png?raw=true)
+<p align="center">![General Plan for Layout of SmartTraffic System Test](https://github.com/sfagin89/SmartTraffic/blob/main/TrafficIntersectionModel.png?raw=true)</p>
 * A minimum of 2 nodes will be needed in order to demonstrate the ability of the nodes to communicate with each other, as well as show how the speeds of the lights will adjust at an intersection based on traffic at another intersection.
 
 [^1]: https://www.theguardian.com/technology/2020/feb/03/berlin-artist-uses-99-phones-trick-google-maps-traffic-jam-alert
@@ -48,5 +48,3 @@ A smart traffic light system that is able to recognize, count, and determine the
 [^5]: https://iopscience.iop.org/article/10.1088/1742-6596/801/1/012048/pdf
 [^6]: https://link.springer.com/referenceworkentry/10.1007%2F978-0-387-30440-3_559#howtocite
 [^7]: https://en.wikipedia.org/wiki/Traffic_model
-
-
