@@ -34,6 +34,8 @@ A smart traffic light system that is able to recognize, count, and determine the
   * We are treating this similar to how network routers behave, where a routing table is formed based on route information received from other routers, and the best route is determined using a set of metrics dependent on the routing protocol in use. Similarly, the traffic information sent from other nodes will be stored, and the information later used by our Traffic Algortihm to determine the best way to route traffic by adjusting timing of traffic lights.
 ### Traffic Adjustment Algorithm
 * What algorithm will be used to determine how individual nodes should adjust their traffic light speeds to improve traffic conditions at their own and other intersections?
+  * Currently researching existing Traffic Congestion Models, as well as previous research into this topic.[^5][^6][^7]
+  * Microscopic traffic flow model vs Macroscopic traffic flow model
 
 ## Physical Prototype for Testing Setup
 ![General Plan for Layout of SmartTraffic System Test](https://github.com/sfagin89/SmartTraffic/blob/main/TrafficIntersectionModel.png?raw=true)
@@ -43,3 +45,8 @@ A smart traffic light system that is able to recognize, count, and determine the
 [^2]: https://www.tensorflow.org/
 [^3]: https://github.com/tensorflow/models/tree/master/research/object_detection
 [^4]: https://modelzoo.co/model/yolo-tensorflow
+[^5]: https://iopscience.iop.org/article/10.1088/1742-6596/801/1/012048/pdf
+[^6]: https://link.springer.com/referenceworkentry/10.1007%2F978-0-387-30440-3_559#howtocite
+[^7]: https://en.wikipedia.org/wiki/Traffic_model
+
+
