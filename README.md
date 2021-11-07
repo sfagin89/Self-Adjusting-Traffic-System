@@ -35,7 +35,7 @@ A smart traffic light system that is able to recognize, count, and determine the
   ```
   wget https://storage.googleapis.com/download.tensorflow.org/models/tflite/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip
   ```
-  * Some work needs to be done to improve the accuracy. May look into using an accelerator of some kind, as mentioned in the Edje Electronics guide.
+  * Some work needs to be done to improve the accuracy. May look into using an accelerator of some kind, as mentioned in the Edje Electronics guide. The above test was run using a Raspberry Pi 3. Further implementations will be done on a Raspberry Pi 4, which during benchmark chests has displayed CPU performance improvements of as much as +36%, and GPU performance improvements ranging from +34% - 70% depending on the function being tested[^11]. This increase in CPU and GPU performance should provide significant improvement in the speed and accuracy of the TensorFlow Object Detection.
   * The data produced by the script still needs to be stored and ready to transmit to other nodes.
 ### Phase 2 - Node Communication
 * How will the Nodes communicate and share traffic information with each other?
@@ -62,3 +62,4 @@ A smart traffic light system that is able to recognize, count, and determine the
 [^8]: https://www.tensorflow.org/lite
 [^9]: https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi/blob/master/Raspberry_Pi_Guide.md
 [^10]: https://www.youtube.com/watch?v=aimSGOAUI8Y&ab_channel=EdjeElectronics
+[^11]: https://www.geeks3d.com/20190930/raspberry-pi-4-vs-raspberry-pi-3-cpu-and-gpu-benchmarks/
