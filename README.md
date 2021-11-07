@@ -28,12 +28,14 @@ A smart traffic light system that is able to recognize, count, and determine the
   * This will be achieved simply by determining which camera is observing the traffic. This becomes more complicated if a single central camera were used.
 * Phase 1 Implementation update:
   * Due to using Raspberry Pis as our traffic nodes, the full TensorFlow platform may be too powerful to run effectively. Taking that into account, we have instead gone with **TensorFlow Lite**[^8], an open-source framework built to run on mobile and IoT devices.
-  * Using this[^9] guide, TensorFlow Lite was installed on a Raspberry Pi, along with a simple webcam, and tested on a local street view.
+  * Using a guide created by **Edje Electronics**[^9][^10] guide, TensorFlow Lite was installed on a Raspberry Pi, along with a simple webcam, and tested on a local street view.
   ![Result of Initial TFLite Test](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_1.png?raw=true)
   * A sample TFLite model provided by Google was used as the Detection Model for this test, pulled using the following command:
   ```
   wget https://storage.googleapis.com/download.tensorflow.org/models/tflite/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip
   ```
+  * Some work needs to be done to improve the accuracy. May look into using an accelerator of some kind, as mentioned in the Edje Electronics guide.
+  * The data produced by the script still needs to be stored and ready to transmit to other nodes.
 ### Phase 2 - Node Communication
 * How will the Nodes communicate and share traffic information with each other?
   * Considered whether a star topology or a mesh topology wuold work better. A star topology with a central device that communicated with all nodes would allow for a more resource/computationally heavy algorithm. However, this may introduce issues with speed of response times, as traffic information would have to be sent from each node to the central unit, run through an algorithm on that unit, and then sent back to all of the nodes.
@@ -58,3 +60,4 @@ A smart traffic light system that is able to recognize, count, and determine the
 [^7]: https://en.wikipedia.org/wiki/Traffic_model
 [^8]: https://www.tensorflow.org/lite
 [^9]: https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi/blob/master/Raspberry_Pi_Guide.md
+[^10]: https://www.youtube.com/watch?v=aimSGOAUI8Y&ab_channel=EdjeElectronics
