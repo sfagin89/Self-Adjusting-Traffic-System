@@ -29,7 +29,7 @@ A smart traffic light system that is able to recognize, count, and determine the
 * Phase 1 Implementation update:
   * Due to using Raspberry Pis as our traffic nodes, the full TensorFlow platform may be too powerful to run effectively. Taking that into account, we have instead gone with **TensorFlow Lite**[^8], an open-source framework built to run on mobile and IoT devices.
   * Using this[^9] guide, TensorFlow Lite was installed on a Raspberry Pi, along with a simple webcam, and tested on a local street view.
-  ![Result of Initial TFLite Test](https://github.com/sfagin89/SmartTraffic/blob/main/Object Detection Test 1.png?raw=true)
+  ![Result of Initial TFLite Test](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_1.png?raw=true)
   * A sample TFLite model provided by Google was used as the Detection Model for this test, pulled using the following command:
   ```
   wget https://storage.googleapis.com/download.tensorflow.org/models/tflite/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip
