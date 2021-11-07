@@ -11,7 +11,7 @@ A smart traffic light system that is able to recognize, count, and determine the
 * Each node will directly connect to it's neighboring nodes in a mesh network
 
 ## A successful finished product should include the following:
-1. The individual nodes (1 per intersection), should recognized the presense of vehicles, be able to count them, and determine their direction relative to the current intersection.
+1. The individual nodes (1 per intersection), should recognized the presence of vehicles, be able to count them, and determine their direction relative to the current intersection.
 2. The nodes should be able to communicate between each other, passing and receiving intersection traffic information.
 3. An algorithm that the nodes can use to determine how traffic lights should be adjusted to improve traffic flow in areas of congested traffic, based on the traffic information at their node, as well as all other nodes they hold traffic information for.
 
@@ -39,10 +39,10 @@ A smart traffic light system that is able to recognize, count, and determine the
   * The data produced by the script still needs to be stored and ready to transmit to other nodes.
 ### Phase 2 - Node Communication
 * How will the Nodes communicate and share traffic information with each other?
-  * Considered whether a star topology or a mesh topology wuold work better. A star topology with a central device that communicated with all nodes would allow for a more resource/computationally heavy algorithm. However, this may introduce issues with speed of response times, as traffic information would have to be sent from each node to the central unit, run through an algorithm on that unit, and then sent back to all of the nodes.
+  * Considered whether a star topology or a mesh topology would work better. A star topology with a central device that communicated with all nodes would allow for a more resource/computationally heavy algorithm. However, this may introduce issues with speed of response times, as traffic information would have to be sent from each node to the central unit, run through an algorithm on that unit, and then sent back to all of the nodes.
   * The current plan is use a partial mesh topology, allowing direct communication between the nodes, as well as providing link redundancy.
 * How will Nodes store traffic information received from other nodes?
-  * We are treating this similar to how network routers behave, where a routing table is formed based on route information received from other routers, and the best route is determined using a set of metrics dependent on the routing protocol in use. Similarly, the traffic information sent from other nodes will be stored, and the information later used by our Traffic Algortihm to determine the best way to route traffic by adjusting timing of traffic lights.
+  * We are treating this similar to how network routers behave, where a routing table is formed based on route information received from other routers, and the best route is determined using a set of metrics dependent on the routing protocol in use. Similarly, the traffic information sent from other nodes will be stored, and the information later used by our Traffic Algorithm to determine the best way to route traffic by adjusting timing of traffic lights.
 ### Phase 3 - Traffic Adjustment Algorithm
 * What algorithm will be used to determine how individual nodes should adjust their traffic light speeds to improve traffic conditions at their own and other intersections?
   * Currently researching existing Traffic Congestion Models, as well as previous research into this topic.[^5][^6][^7]
