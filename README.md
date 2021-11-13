@@ -55,10 +55,30 @@ A smart traffic light system that is able to recognize, count, and determine the
 ## Instructions for Setting Up the Raspberry Pi as a Traffic Node
 ### Imaging the SD Card:
 **IMPORTANT**: This Project uses the RPi OS "Buster", newer OS's have not been confirmed to work.
-#### Imaging an SD Card with Raspbian Buster on Windows 10
-#### Imaging an SD Card with Raspbian Buster on MAC
-### Post-Imaging Pre-Boot Setup:
+#### Imaging an SD Card with Raspbian Buster on Windows 10:
+* Download Raspbian Buster from the Raspberry Pi Download Site[^12]
+  * The version used here is 2021-05-07-raspios-buster-armhf.img
+* Unzip the Archived Image
+* Insert a blank MicroSD card into your computer
+* Use an imaging software to format and image the card
+  * The application used to image the card here is Rufus[^13]
+  * If the card isn't accessible after the first image, re-image the card.
+#### Imaging an SD Card with Raspbian Buster on MAC:
+### Post-Imaging Pre-Boot Setup (Optional Steps):
+**All of the following steps should be done within the Boot Folder once the SD card is imaged**
+**None of these steps are required, but they make the first boot of the Pi much simpler**
+* Enable SSH by Default
+  * Add a plain text file called **SSH**, with no file extension. This file has been provided here in the directory "Files to Add to SD Card Boot Folder Post-Image"
+* Manually Connect to Wifi
+  * Add a file called **wpa_supplicant.conf**. This file has been provided here in the directory "Files to Add to SD Card Boot Folder Post-Image"
+  * Open the file and change "YOUR_NETWORK_NAME" to your wireless network's SSID, and "YOUR_PASSWORD" to your wireless network's password. This setup requires the network you're connecting to to be using WPA-PSK security.
+* Adjust Resolution (If using a remote desktop client)
+  * Open the file **config.txt**
+  * Uncomment the line hdmi_force_hotplug=1
+  * Uncomment the line hdmi_group=1 and change the value to 2
+  * Uncomment the line hdmi_mode=1 and change the value to 28
 ### First Boot Setup:
+
 
 [^1]: https://www.theguardian.com/technology/2020/feb/03/berlin-artist-uses-99-phones-trick-google-maps-traffic-jam-alert
 [^2]: https://www.tensorflow.org/
@@ -71,3 +91,5 @@ A smart traffic light system that is able to recognize, count, and determine the
 [^9]: https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi/blob/master/Raspberry_Pi_Guide.md
 [^10]: https://www.youtube.com/watch?v=aimSGOAUI8Y&ab_channel=EdjeElectronics
 [^11]: https://www.geeks3d.com/20190930/raspberry-pi-4-vs-raspberry-pi-3-cpu-and-gpu-benchmarks/
+[^12]: https://downloads.raspberrypi.org/raspios_armhf/images/
+[^13]: https://rufus.ie/en/
