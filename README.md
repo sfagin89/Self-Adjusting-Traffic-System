@@ -74,9 +74,9 @@ A smart traffic light system that is able to recognize, count, and determine the
   * Open the file and change "YOUR_NETWORK_NAME" to your wireless network's SSID, and "YOUR_PASSWORD" to your wireless network's password. This setup requires the network you're connecting to to be using WPA-PSK security.
 * Adjust Resolution (If using a remote desktop client)
   * Open the file **config.txt**
-  * Uncomment the line hdmi_force_hotplug=1
-  * Uncomment the line hdmi_group=1 and change the value to 2
-  * Uncomment the line hdmi_mode=1 and change the value to 28
+  * Uncomment the line ```hdmi_force_hotplug=1```
+  * Uncomment the line ```hdmi_group=1 and change the value to 2```
+  * Uncomment the line ```hdmi_mode=1 and change the value to 28```
 ### First Boot Setup:
 **All of the following steps are done via command line**
 * Assuming the Pi is connected to the network, SSH to it using the default username and password for Raspbian
@@ -87,9 +87,10 @@ A smart traffic light system that is able to recognize, count, and determine the
 * Install Updates
   * ```sudo apt-get update```
   * ```sudo apt-get dist-upgrade``` (This can take up to an hour)
+
 **Optional Steps**
 * Enable VNC Access
-  * sudo raspi-config
+  * ```sudo raspi-config```
   * Navigate to Interface Options > VNC
   * Select Yes to enable VNC Server
   * Select Finish
