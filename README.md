@@ -52,6 +52,14 @@ A smart traffic light system that is able to recognize, count, and determine the
 ![General Plan for Layout of SmartTraffic System Test](https://github.com/sfagin89/SmartTraffic/blob/main/TrafficIntersectionModel.png?raw=true)
 * A minimum of 2 nodes will be needed in order to demonstrate the ability of the nodes to communicate with each other, as well as show how the speeds of the lights will adjust at an intersection based on traffic at another intersection.
 
+## Instructions for Setting Up the Raspberry Pi as a Traffic Node
+### Imaging the SD Card:
+**IMPORTANT**: This Project uses the RPi OS "Buster", newer OS's have not been confirmed to work.
+#### Imaging an SD Card with Raspbian Buster on Windows 10
+#### Imaging an SD Card with Raspbian Buster on MAC
+### Post-Imaging Pre-Boot Setup:
+### First Boot Setup:
+
 [^1]: https://www.theguardian.com/technology/2020/feb/03/berlin-artist-uses-99-phones-trick-google-maps-traffic-jam-alert
 [^2]: https://www.tensorflow.org/
 [^3]: https://github.com/tensorflow/models/tree/master/research/object_detection
