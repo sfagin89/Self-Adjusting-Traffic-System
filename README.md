@@ -52,7 +52,7 @@ A smart traffic light system that is able to recognize, count, and determine the
 ![General Plan for Layout of SmartTraffic System Test](https://github.com/sfagin89/SmartTraffic/blob/main/TrafficIntersectionModel.png?raw=true)
 * A minimum of 2 nodes will be needed in order to demonstrate the ability of the nodes to communicate with each other, as well as show how the speeds of the lights will adjust at an intersection based on traffic at another intersection.
 
-## Instructions for Setting Up the Raspberry Pi as a Traffic Node
+## Setting Up the Raspberry Pi as a Traffic Node
 ### Imaging the SD Card:
 **IMPORTANT**: This Project uses the RPi OS "Buster", newer OS's have not been confirmed to work.
 #### Imaging an SD Card with Raspbian Buster on Windows 10:
@@ -63,7 +63,6 @@ A smart traffic light system that is able to recognize, count, and determine the
 * Use an imaging software to format and image the card
   * The application used to image the card here is Rufus[^13]
   * If the card isn't accessible after the first image, re-image the card.
-#### Imaging an SD Card with Raspbian Buster on MAC:
 ### Post-Imaging Pre-Boot Setup (Optional Steps):
 **All of the following steps should be done within the Boot Folder once the SD card is imaged**
 **None of these steps are required, but they make the first boot of the Pi much simpler**
@@ -90,7 +89,8 @@ A smart traffic light system that is able to recognize, count, and determine the
 
 **Optional Steps**
 * Enable VNC Access
-  * ```sudo raspi-config```
+  * Open the Raspbery Pi Config File
+    * ```sudo raspi-config```
   * Navigate to Interface Options > VNC
   * Select Yes to enable VNC Server
   * Select Finish
