@@ -78,7 +78,29 @@ A smart traffic light system that is able to recognize, count, and determine the
   * Uncomment the line hdmi_group=1 and change the value to 2
   * Uncomment the line hdmi_mode=1 and change the value to 28
 ### First Boot Setup:
-
+**All of the following steps are done via command line**
+* Assuming the Pi is connected to the network, SSH to it using the default username and password for Raspbian
+  * Username: Pi
+  * Password: raspberry
+* Change the default password using the following command:
+  * ```passwd```
+* Install Updates
+  * ```sudo apt-get update```
+  * ```sudo apt-get dist-upgrade``` (This can take up to an hour)
+**Optional Steps**
+* Enable VNC Access
+  * sudo raspi-config
+  * Navigate to Interface Options > VNC
+  * Select Yes to enable VNC Server
+  * Select Finish
+* Set Python3 as default
+  * Open the .bashrc file
+    * ```nano ~/.bashrc```
+  * Type the following on a new line at the end of the file
+    * ```alias python=python3```
+  * Save and exit the file
+  * Run the following command to make the alias permanent
+    * ```source ~/.bashrc```
 
 [^1]: https://www.theguardian.com/technology/2020/feb/03/berlin-artist-uses-99-phones-trick-google-maps-traffic-jam-alert
 [^2]: https://www.tensorflow.org/
