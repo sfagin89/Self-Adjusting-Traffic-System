@@ -73,8 +73,9 @@ A smart traffic light system that is able to recognize, count, and determine the
 * Adjust Resolution (If using a remote desktop client)
   * Open the file **config.txt**
   * Uncomment the line ```hdmi_force_hotplug=1```
-  * Uncomment the line ```hdmi_group=1 and change the value to 2```
-  * Uncomment the line ```hdmi_mode=1 and change the value to 28```
+  * Uncomment the line ```hdmi_group=1```
+  * Uncomment the line ```hdmi_mode=1 and change the value to 16```
+  * Add the following line to the end of the file ```hdmi_ignore_edid=0xa5000080```
 ### First Boot Setup:
 **All of the following steps are done via command line**
 * Assuming the Pi is connected to the network, SSH to it using the default username and password for Raspbian
