@@ -64,8 +64,7 @@ A smart traffic light system that is able to recognize, count, and determine the
   * The application used to image the card here is Rufus[^13]
   * If the card isn't accessible after the first image, re-image the card.
 ### Post-Imaging Pre-Boot Setup (Optional Steps):
-**All of the following steps should be done within the Boot Folder once the SD card is imaged**
-**None of these steps are required, but they make the first boot of the Pi much simpler**
+**All of the following steps should be done within the Boot Folder once the SD card is imaged. None of these steps are required, but they make the first boot of the Pi much simpler**
 * Enable SSH by Default
   * Add a plain text file called **SSH**, with no file extension. This file has been provided here in the directory "Files to Add to SD Card Boot Folder Post-Image"
 * Manually Connect to Wifi
@@ -102,6 +101,23 @@ A smart traffic light system that is able to recognize, count, and determine the
   * Save and exit the file
   * Run the following command to make the alias permanent
     * ```source ~/.bashrc```
+
+### Installing TensorFlow Lite:
+* A guide for Installing and Setting up TensorFlow Lite has been provided by EdjeElectronics[^9]. This guide takes you through installing all of the requirements for running TensorFlow Lite as well.
+  * Follow the guide starting at step 1b
+  * In step 1d, Option 1 (Google's sample TFLite model) is used for this project.
+* **Once you've finished the setup instructions from the guide, you will need to use the command ```source tflite1-env/bin/activate``` everytime you open a new terminal window, or restart the Pi.
+
+### Running TensorFlow Lite:
+* Run the following command to start Tensorflow Lite:
+```python3 TFLite_detection_webcam.py --modeldir=Sample_TFLite_model &```
+
+* To exit the program, run the following commands to kill the process
+  ```pgrep python``` The resulting number is the process id
+  ```kill -15 <process id>```
+
+* If that doesn't work, use the below as a last resort. This can leave Zombie Processes so isn't ideal.
+  ```kill -9 <process id>```
 
 [^1]: https://www.theguardian.com/technology/2020/feb/03/berlin-artist-uses-99-phones-trick-google-maps-traffic-jam-alert
 [^2]: https://www.tensorflow.org/
