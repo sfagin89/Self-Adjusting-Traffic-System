@@ -107,7 +107,7 @@ A smart traffic light system that is able to recognize, count, and determine the
 * A guide for Installing and Setting up TensorFlow Lite has been provided by EdjeElectronics[^9]. This guide takes you through installing all of the requirements for running TensorFlow Lite as well.
   * Follow the guide starting at step 1b
   * In step 1d, Option 1 (Google's sample TFLite model) is used for this project.
-* **Once you've finished the setup instructions from the guide, you will need to use the command ```source tflite1-env/bin/activate``` everytime you open a new terminal window, or restart the Pi.
+* **Once you've finished the setup instructions from the guide, you will need to use the command ```source tflite1-env/bin/activate``` every time you open a new terminal window, or restart the Pi.
 
 ### Running TensorFlow Lite:
 * Run the following command to start Tensorflow Lite:
