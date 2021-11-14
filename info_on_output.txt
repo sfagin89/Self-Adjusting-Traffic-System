@@ -1,0 +1,13 @@
+Inside the ‘while True’ loop at line 163, add
+file = open(‘object_detected.txt’, ’w’)
+
+===============================
+
+file.write(label)
+file.write(‘\n’)
+
+Then add the above code below cv2.putText(….) that is inside ‘i in range(len(scores))’ loop
+
+===============================
+
+Add file.close() before cv2.destroyAllWindows() at the end of the webcam python script
