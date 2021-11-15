@@ -139,6 +139,25 @@ A smart traffic light system that is able to recognize, count, and determine the
       64 bytes from 192.168.0.10: icmp_seq=2 ttl=64 time=0.197 ms
       64 bytes from 192.168.0.10: icmp_seq=3 ttl=64 time=0.219 ms
       ````
+### Verify Socket Communication between Client-Host Nodes
+**The following test should be run on both nodes. In this example the first test uses node01 as the server and node02 as the client, with the second test reversing the positions.**
+* On the server node run the following command:
+  * ````
+    pi@tnode01:~/Downloads $ python server_test.py
+    Socket successfully created
+    socket bound to <listening port>
+    socket is listening
+    ````
+* On the client node run the following command:
+  * ````
+    pi@tnode02:~/Downloads $ python client_2to1com_test.py
+    Socket successfully created
+    The socket has successfully connected to node01
+    ````
+* On the server node, you should see the following response once the client node has connected and then close.
+  * ````
+    Got connection from ('192.168.0.20', <source port>)
+    ````
 
 ## Begin Smart Traffic Application
 ### Running TensorFlow Lite:
