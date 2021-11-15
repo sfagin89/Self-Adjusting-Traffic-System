@@ -109,6 +109,33 @@ A smart traffic light system that is able to recognize, count, and determine the
   * In step 1d, Option 1 (Google's sample TFLite model) is used for this project.
 * **Once you've finished the setup instructions from the guide, you will need to use the command ```source tflite1-env/bin/activate``` every time you open a new terminal window, or restart the Pi.
 
+### Setting up Ad-Hoc Network between Nodes
+* Wired Ad-Hoc Network
+  * Connect the Raspberry Pi's together with an ethernet cable
+  * Edit the configuration file for the DHCP client daemon on both Pi's
+    * ```sudo nano /etc/dhcpcd.conf```
+  * Uncomment the following lines:
+    * ```interface eth0```
+    * ```static ip_address=192.168.0.#/24``` -- Replace # with a number, this number should be different on each node.
+    * ```static routers=192.168.0.1```
+  * Save and exit the file
+  * Restart the Pi's
+  * Confirm the static IPs are set by running the following command (2 IPs should now be present):
+    * ````
+      pi@tnode01:~ $ hostname -I
+      192.168.0.10 192.X.X.X
+      pi@tnode02:~ $ hostname -I
+      192.168.0.20 192.X.X.X
+      ````
+  * Verify the connection between both nodes by pinging the address of each node from the other.
+    * ````
+      pi@tnode01:~ $ ping 192.168.0.20
+      PING 192.168.0.20 (192.168.0.20) 56(84) bytes of data.
+      64 bytes from 192.168.0.20: icmp_seq=1 ttl=64 time=0.618 ms
+      64 bytes from 192.168.0.20: icmp_seq=2 ttl=64 time=0.208 ms
+      ````
+
+## Begin Smart Traffic Application
 ### Running TensorFlow Lite:
 * Run the following command to start Tensorflow Lite:
 ```python3 TFLite_detection_webcam.py --modeldir=Sample_TFLite_model &```
