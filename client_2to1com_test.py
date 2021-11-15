@@ -25,6 +25,11 @@ s.connect((host_ip, port))
 
 print ("The socket has successfully connected to node01")
 
+s.send('This is a message sent by node02'.encode())
+
+with open('msg02.txt', 'rb') as f:
+    s.sendfile(f,0)
+
 rcvmsg = s.recv(1024)
 
 # Print to the console
