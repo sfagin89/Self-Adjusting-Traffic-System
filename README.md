@@ -153,6 +153,7 @@ A smart traffic light system that is able to recognize, count, and determine the
     pi@tnode02:~/Downloads $ python client_2to1com_test.py
     Socket successfully created
     The socket has successfully connected to node01
+    Thank you for connecting
     ````
 * On the server node, you should see the following response once the client node has connected and then close.
   * ````

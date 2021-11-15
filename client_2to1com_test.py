@@ -24,3 +24,8 @@ except socket.gaierror:
 s.connect((host_ip, port))
 
 print ("The socket has successfully connected to node01")
+
+rcvmsg = s.recv(1024)
+
+# Print to the console
+print(rcvmsg.decode());
