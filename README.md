@@ -184,3 +184,4 @@ A smart traffic light system that is able to recognize, count, and determine the
 [^11]: https://www.geeks3d.com/20190930/raspberry-pi-4-vs-raspberry-pi-3-cpu-and-gpu-benchmarks/
 [^12]: https://downloads.raspberrypi.org/raspios_armhf/images/
 [^13]: https://rufus.ie/en/
+[^14]: https://www.geeksforgeeks.org/socket-programming-python/
