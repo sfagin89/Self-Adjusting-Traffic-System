@@ -133,6 +133,11 @@ A smart traffic light system that is able to recognize, count, and determine the
       PING 192.168.0.20 (192.168.0.20) 56(84) bytes of data.
       64 bytes from 192.168.0.20: icmp_seq=1 ttl=64 time=0.618 ms
       64 bytes from 192.168.0.20: icmp_seq=2 ttl=64 time=0.208 ms
+      pi@tnode02:~ $ ping 192.168.0.10
+      PING 192.168.0.10 (192.168.0.10) 56(84) bytes of data.
+      64 bytes from 192.168.0.10: icmp_seq=1 ttl=64 time=0.326 ms
+      64 bytes from 192.168.0.10: icmp_seq=2 ttl=64 time=0.197 ms
+      64 bytes from 192.168.0.10: icmp_seq=3 ttl=64 time=0.219 ms
       ````
 
 ## Begin Smart Traffic Application
