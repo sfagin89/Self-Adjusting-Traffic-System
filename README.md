@@ -37,12 +37,22 @@ A smart traffic light system that is able to recognize, count, and determine the
   ```
   * Some work needs to be done to improve the accuracy. May look into using an accelerator of some kind, as mentioned in the Edje Electronics guide. The above test was run using a Raspberry Pi 3. Further implementations will be done on a Raspberry Pi 4, which during benchmark chests has displayed CPU performance improvements of as much as +36%, and GPU performance improvements ranging from +34% - 70% depending on the function being tested[^11]. This increase in CPU and GPU performance should provide significant improvement in the speed and accuracy of the TensorFlow Object Detection.
   * The data produced by the script still needs to be stored and ready to transmit to other nodes.
+* Phase 1 Implementation update 11/16/21:
+  * Updated the TFLite Webcam script to output the results to a file as well, to allow for the nodes to send this information to other nodes.
+  * After testing the new webcams running TFLite to identify hot-wheel cars, the accuracy was very poor. At no point were the cars recognized as cars. Most of the time the model was unable to identify them as objects, and when it did, it thought they were suitcases.
+  ![Result of Initial TFLite Test 3](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_3_111621.png?raw=true)
+  * After some additional research, we're strongly considering training our own model.
+    * https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10
 ### Phase 2 - Node Communication
 * How will the Nodes communicate and share traffic information with each other?
   * Considered whether a star topology or a mesh topology would work better. A star topology with a central device that communicated with all nodes would allow for a more resource/computationally heavy algorithm. However, this may introduce issues with speed of response times, as traffic information would have to be sent from each node to the central unit, run through an algorithm on that unit, and then sent back to all of the nodes.
   * The current plan is use a partial mesh topology, allowing direct communication between the nodes, as well as providing link redundancy.
 * How will Nodes store traffic information received from other nodes?
   * We are treating this similar to how network routers behave, where a routing table is formed based on route information received from other routers, and the best route is determined using a set of metrics dependent on the routing protocol in use. Similarly, the traffic information sent from other nodes will be stored, and the information later used by our Traffic Algorithm to determine the best way to route traffic by adjusting timing of traffic lights.
+* Phase 2 Implementation update 11/16/21:
+  * Set up an Ad-Hoc network between the 2 nodes over ethernet.
+  * Wrote a pair of scripts to set up the nodes as a TCP/IP Server or Client, to allow communication over a specified port.
+  * Tested sending messages between the nodes, as well as sending the contents of a file from one node to another.
 ### Phase 3 - Traffic Adjustment Algorithm
 * What algorithm will be used to determine how individual nodes should adjust their traffic light speeds to improve traffic conditions at their own and other intersections?
   * Currently researching existing Traffic Congestion Models, as well as previous research into this topic.[^5][^6][^7]
@@ -106,6 +116,7 @@ A smart traffic light system that is able to recognize, count, and determine the
 ### Installing TensorFlow Lite:
 * A guide for Installing and Setting up TensorFlow Lite has been provided by EdjeElectronics[^9]. This guide takes you through installing all of the requirements for running TensorFlow Lite as well.
   * Follow the guide starting at step 1b
+  * After downloading the Repo in step 1b, replace the TFLite_detection_webcam.py file with the one in this repo, located in the **Modified files from TFlite Github** directory.
   * In step 1d, Option 1 (Google's sample TFLite model) is used for this project.
 * **Once you've finished the setup instructions from the guide, you will need to use the command ```source tflite1-env/bin/activate``` every time you open a new terminal window, or restart the Pi.
 
