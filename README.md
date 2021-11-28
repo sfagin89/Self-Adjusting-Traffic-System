@@ -43,6 +43,7 @@ A smart traffic light system that is able to recognize, count, and determine the
   ![Result of Initial TFLite Test 3](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_3_111621.png?raw=true)
   * After some additional research, we're strongly considering training our own model.
     * https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10
+* Phase 1 Implementation update 11/28/21:
 ### Phase 2 - Node Communication
 * How will the Nodes communicate and share traffic information with each other?
   * Considered whether a star topology or a mesh topology would work better. A star topology with a central device that communicated with all nodes would allow for a more resource/computationally heavy algorithm. However, this may introduce issues with speed of response times, as traffic information would have to be sent from each node to the central unit, run through an algorithm on that unit, and then sent back to all of the nodes.
