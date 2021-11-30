@@ -20,8 +20,42 @@ import cv2
 import numpy as np
 import sys
 import time
+import csv
 from threading import Thread
+from datetime import datetime
 import importlib.util
+
+#Edit 04: Added Function to write label output to CSV file
+def logWrite(label_out):
+    dateTimeObj = datetime.now()
+    timeObj = dateTimeObj.time()
+    #dateObj = dateTimeObj.date()
+    file = "object_detected.csv"
+    headers = ['Time Stamp', 'Output']
+    row_data = [timeObj.strftime("%H:%M:%S.%f"), label_out]
+
+    # Checking if Log file exists
+    if not os.path.exists(file):
+        print("Creating "+file)
+
+        # creating file and adding column headers
+        with open(file, 'w') as csvfile:
+            # creating the csv writer object
+            csvwriter = csv.writer(csvfile)
+            # writing the column headers
+            csvwriter.writerow(headers)
+            # close the csv file
+            csvfile.close()
+
+    # appending new row to log file
+    with open(file, 'a') as csvfile:
+        # creating the csv writer object
+        csvwriter = csv.writer(csvfile)
+        # writing the data row
+        csvwriter.writerow(row_data)
+        # close csv file
+        csvfile.close()
+
 
 # Define VideoStream class to handle streaming of video from webcam in separate processing thread
 # Source - Adrian Rosebrock, PyImageSearch: https://www.pyimagesearch.com/2015/12/28/increasing-raspberry-pi-fps-with-python-and-opencv/
@@ -160,8 +194,9 @@ time.sleep(1)
 
 #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
 while True:
-    #EDIT 01: File to hold output
-    file = open('object_detected', 'w')
+    #Edit 05: Replaced with logWrite Function
+    #Edit 01: File to hold output
+    #file = open('object_detected', 'w')
 
     # Start timer (for calculating frame rate)
     t1 = cv2.getTickCount()
@@ -210,9 +245,11 @@ while True:
             cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED) # Draw white box to put label text in
             cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2) # Draw label text
 
+            #Edit 06:Replaced with logWrite Function
             #Edit 02: Begins writing object label to file
-            file.write(label)
-            file.write('\n')
+            #file.write(label)
+            #file.write('\n')
+            logwrite(lable)
 
     # Draw framerate in corner of frame
     cv2.putText(frame,'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
@@ -229,8 +266,9 @@ while True:
     if cv2.waitKey(1) == ord('q'):
         break
 
+#Edit 07: No longer needed, file closed in logWrite Function
 #Edit 03: Closes the written to file
-file.close()
+#file.close()
 
 # Clean up
 cv2.destroyAllWindows()
