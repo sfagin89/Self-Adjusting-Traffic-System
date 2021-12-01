@@ -48,7 +48,6 @@ A smart traffic light system that is able to recognize, count, and determine the
   ![Result of Initial TFLite Test 4](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_4_113021.png?raw=true)
   * Additionally, a new custom model based on images of the toy cars used in our demo has been trained. Currently in the process of converting it work with TensorFlow Lite.
     * Custom model was trained on Google Colab Pro. Tensorflow model Github repository is cloned directly to Google Colab Pro and the output are saved to Google Drive. The notebook [trainmodel.ipynb](https://github.com/sfagin89/SmartTraffic/blob/main/Custom_model/trainmodel.ipynb) contains steps on how to train Smart Traffic's custom model, however, some steps are omitted inside the notebook. It is best to follow instruction on this [readme]() for accurate steps on how to train Smart Traffic's custom model.
-    * **Detailed steps on how to train the model are as follow:**
 
 ### Phase 2 - Node Communication
 * How will the Nodes communicate and share traffic information with each other?
