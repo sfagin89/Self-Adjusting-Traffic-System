@@ -27,7 +27,7 @@ print ("The socket has successfully connected to node02")
 
 s.send('This is a message sent by node01'.encode())
 
-with open('msg01.txt', 'rb') as f:
+#with open('msg01.txt', 'rb') as f:
     s.sendfile(f,0)
 
 rcvmsg = s.recv(1024)
