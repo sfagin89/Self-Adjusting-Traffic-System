@@ -44,6 +44,9 @@ A smart traffic light system that is able to recognize, count, and determine the
   * After some additional research, we're strongly considering training our own model.
     * https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10
 * Phase 1 Implementation update 11/28/21:
+  * Adjusted viewing angle of cameras from front to side view. This, in addition to reducing 'clutter' appears to have improved the accuracy of the detection model.
+  ![Result of Initial TFLite Test 4](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_4_113021.png?raw=true)
+  * Additionally, a new custom model based on images of the toy cars used in our demo has been trained. Currently in the process of converting it work with TensorFlow Lite.
 ### Phase 2 - Node Communication
 * How will the Nodes communicate and share traffic information with each other?
   * Considered whether a star topology or a mesh topology would work better. A star topology with a central device that communicated with all nodes would allow for a more resource/computationally heavy algorithm. However, this may introduce issues with speed of response times, as traffic information would have to be sent from each node to the central unit, run through an algorithm on that unit, and then sent back to all of the nodes.
@@ -54,10 +57,45 @@ A smart traffic light system that is able to recognize, count, and determine the
   * Set up an Ad-Hoc network between the 2 nodes over ethernet.
   * Wrote a pair of scripts to set up the nodes as a TCP/IP Server or Client, to allow communication over a specified port.
   * Tested sending messages between the nodes, as well as sending the contents of a file from one node to another.
+* Phase 2 Implementation update 11/30/21:
+  * Incorporated Socket Communication into main Object Detection Script.
+  * Client and Server traffic nodes now sum the total count of cars at an intersection (by cycling through each camera connected to the node) then send that information to the neighboring node, as well as receives that information from the neighboring node.
+  ![Current Result of Node Communication between Client and Server Nodes](https://github.com/sfagin89/SmartTraffic/blob/main/Code_Output_ServerClient.png?raw=true)
 ### Phase 3 - Traffic Adjustment Algorithm
 * What algorithm will be used to determine how individual nodes should adjust their traffic light speeds to improve traffic conditions at their own and other intersections?
-  * Currently researching existing Traffic Congestion Models, as well as previous research into this topic.[^5][^6][^7]
-  * Microscopic traffic flow model vs Macroscopic traffic flow model
+  * Currently researching existing Traffic Congestion Models, as well as previous research into this topic.[^5][^6][^7][^16]
+* Phase 3 Implementation update 11/30/21:
+  * Researched Typical Traffic Signal behavior, Methods for Signal Coordination and Detection Systems.[^15]
+    * Cycle Length:
+      * A full Cycle Length (the amount of time required to display all phases for each direction of an intersection before returning to the starting point) typically range from 1-3 minutes, and are based on traffic volume and conditions of intersections.
+      * The goal of signal timing is to find an optimum cycle length for the most efficiency.
+      * Clearance interval times (when changing from one signal phase to the next) are calculated based on speed limit, intersection widths, intersection grades, perception or start-up time, and acceleration rates.
+    * Pre-Timed vs Actuated Signal Timings:
+      * Traffic Signal Behavior is typically Pre-Timed, Semi-Actuated, or Fully-Actuated.
+      * Based on traffic trends, various signal timing plans can be set up in the signal controller.
+    * Detection:
+      * Detection systems are critical to actuated signals, using various methods to detect a vehicle’s approach.
+      * Currently the most reliable form of vehicle detection in use are Inductance loops
+    * Software (Traffic Signal Controller):
+      * The 'brains' of the traffic signal.
+      * Tells the signal what to run, how long to run, when to run, etc.
+      * Collects information from the intersection through the detection system, decides how to respond, and then tells the traffic signal lights how to operate.
+      * CALTRANS 2070 traffic signal controller standards
+  * Paper: Real-time traffic signal optimization model based on average delay time per person.[^16]
+    * Focused on the interrelations between signal parameters (cycle length, split, etc) and evaluation indices (delay time, queue length, number of stops, etc)
+      * Delay Time
+        * Fixed time signals have been proposed as a method to achieve minimum average delay time.
+      * Queue Length constraints
+      * Spillback phenomenon
+    * Australian Road Research Board method (ARRB)
+      * Considers both number of stops and delay time
+    * New models have been proposed, introducing changes in signal models and objectives
+      * Cedar & Reshetnik proposed two signal models for under-saturated and over-saturated intersections, using minimization of maximum queue length and accumulative queue length as two objective functions.
+      * Fuzzy Logic
+    * In both mathematical programming approaches and simulation-based systems, minimum delay time at intersection is a very important objective.
+* Current Planned Approach:
+  * Proof of Concept: Reduce Signals from 3 to 2 when the difference in vehicles per intersection exceeds a predetermined threshold.
+
 
 ## Physical Prototype for Testing Setup
 ![General Plan for Layout of SmartTraffic System Test](https://github.com/sfagin89/SmartTraffic/blob/main/TrafficIntersectionModel.png?raw=true)
@@ -198,3 +236,5 @@ A smart traffic light system that is able to recognize, count, and determine the
 [^12]: https://downloads.raspberrypi.org/raspios_armhf/images/
 [^13]: https://rufus.ie/en/
 [^14]: https://www.geeksforgeeks.org/socket-programming-python/
+[^15]: https://www.foresitegroup.net/a-beginners-guide-to-signal-timing/
+[^16]: https://journals.sagepub.com/doi/full/10.1177/1687814015613500
