@@ -29,8 +29,8 @@ A smart traffic light system that is able to recognize, count, and determine the
 * Phase 1 Implementation update:
   * Due to using Raspberry Pis as our traffic nodes, the full TensorFlow platform may be too powerful to run effectively. Taking that into account, we have instead gone with **TensorFlow Lite**[^8], an open-source framework built to run on mobile and IoT devices.
   * Using a guide created by **Edje Electronics**[^9][^10] guide, TensorFlow Lite was installed on a Raspberry Pi, along with a simple webcam, and tested on a local street view.
-  ![Result of Initial TFLite Test 1](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_1.png?raw=true)
-  ![Result of Initial TFLite Test 2](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_2.png?raw=true)
+  ![Result of Initial TFLite Test 1](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Object_Detection_Test_1.png?raw=true)
+  ![Result of Initial TFLite Test 2](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Object_Detection_Test_2.png?raw=true)
   * A sample TFLite model provided by Google was used as the Detection Model for this test, pulled using the following command:
   ```
   wget https://storage.googleapis.com/download.tensorflow.org/models/tflite/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip
@@ -40,16 +40,16 @@ A smart traffic light system that is able to recognize, count, and determine the
 * Phase 1 Implementation update 11/16/21:
   * Updated the TFLite Webcam script to output the results to a file as well, to allow for the nodes to send this information to other nodes.
   * After testing the new webcams running TFLite to identify hot-wheel cars, the accuracy was very poor. At no point were the cars recognized as cars. Most of the time the model was unable to identify them as objects, and when it did, it thought they were suitcases.
-  ![Result of Initial TFLite Test 3](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_3_111621.png?raw=true)
+  ![Result of Initial TFLite Test 3](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Object_Detection_Test_3_111621.png?raw=true)
   * After some additional research, we're strongly considering training our own model.
     * https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10
 * Phase 1 Implementation update 11/28/21:
   * Adjusted viewing angle of cameras from front to side view. This, in addition to reducing 'clutter' appears to have improved the accuracy of the detection model.
-  ![Result of Initial TFLite Test 4](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_4_113021.png?raw=true)
+  ![Result of Initial TFLite Test 4](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Object_Detection_Test_4_113021.png?raw=true)
   * Additionally, a new custom model based on images of the toy cars used in our demo has been trained. Currently in the process of converting it work with TensorFlow Lite.
-  ![Result of Custom Model 1](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_3_111621.png?raw=true)
-  ![Result of Custom Model 2](https://github.com/sfagin89/SmartTraffic/blob/main/Object_Detection_Test_3_111621.png?raw=true)
-    * Custom model was trained on Google Colab Pro. Tensorflow model Github repository is cloned directly to Google Colab Pro and the output are saved to Google Drive. The notebook [trainmodel.ipynb](https://github.com/sfagin89/SmartTraffic/blob/main/Custom_model/trainmodel.ipynb) contains steps on how to train Smart Traffic's custom model, however, some steps are omitted inside the notebook. It is best to follow instruction on this [readme]() for accurate steps on how to train Smart Traffic's custom model.
+  ![Result of Custom Model 1](https://github.com/sfagin89/SmartTraffic/blob/main/Images/download%20(15.png?raw=true)
+  ![Result of Custom Model 2](https://github.com/sfagin89/SmartTraffic/blob/main/Images/download%20(2.png?raw=true)
+    * Custom model was trained on Google Colab Pro. Tensorflow model Github repository is cloned directly to Google Colab Pro and the output are saved to Google Drive. The notebook [trainmodel.ipynb](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model/trainmodel.ipynb) contains steps on how to train Smart Traffic's custom model, however, some steps are omitted inside the notebook. It is best to follow instruction on this [readme]() for accurate steps on how to train Smart Traffic's custom model.
 
 
 ### Phase 2 - Node Communication
@@ -103,7 +103,7 @@ A smart traffic light system that is able to recognize, count, and determine the
 
 
 ## Physical Prototype for Testing Setup
-![General Plan for Layout of SmartTraffic System Test](https://github.com/sfagin89/SmartTraffic/blob/main/TrafficIntersectionModel.png?raw=true)
+![General Plan for Layout of SmartTraffic System Test](https://github.com/sfagin89/SmartTraffic/blob/main/Images/TrafficIntersectionModel.png?raw=true)
 * A minimum of 2 nodes will be needed in order to demonstrate the ability of the nodes to communicate with each other, as well as show how the speeds of the lights will adjust at an intersection based on traffic at another intersection.
 
 ## Setting Up the Raspberry Pi as a Traffic Node
