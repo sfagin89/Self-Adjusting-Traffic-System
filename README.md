@@ -47,7 +47,7 @@ A smart traffic light system that is able to recognize, count, and determine the
   * Adjusted viewing angle of cameras from front to side view. This, in addition to reducing 'clutter' appears to have improved the accuracy of the detection model.
   ![Result of Initial TFLite Test 4](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Object_Detection_Test_4_113021.png?raw=true)
   * Additionally, a new custom model based on images of the toy cars used in our demo has been trained. Currently in the process of converting it work with TensorFlow Lite.
-  * Model: ssd_mobilenet_v2, Train images: 248 (80%), Test images: 62 (20%)
+  * Pre-trained Model: ssd_mobilenet_v2, Train images: 248 (80%), Test images: 62 (20%)
   ![Result of Custom Model 1](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model_output1.png?raw=true)
   ![Result of Custom Model 2](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model_output2.png?raw=true)
     * Custom model was trained on Google Colab Pro. Tensorflow model Github repository is cloned directly to Google Colab Pro and the output are saved to Google Drive. The notebook [trainmodel.ipynb](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model/trainmodel.ipynb) contains steps on how to train Smart Traffic's custom model, however, some steps are omitted inside the notebook. It is best to follow instruction on this [readme](https://github.com/sfagin89/SmartTraffic/blob/main/Custom_model/README.md) for accurate steps on how to train Smart Traffic's custom model.
@@ -66,7 +66,7 @@ A smart traffic light system that is able to recognize, count, and determine the
 * Phase 2 Implementation update 11/30/21:
   * Incorporated Socket Communication into main Object Detection Script.
   * Client and Server traffic nodes now sum the total count of cars at an intersection (by cycling through each camera connected to the node) then send that information to the neighboring node, as well as receives that information from the neighboring node.
-  ![Current Result of Node Communication between Client and Server Nodes](https://github.com/sfagin89/SmartTraffic/blob/main/Code_Output_ServerClient.png?raw=true)
+  ![Current Result of Node Communication between Client and Server Nodes](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Code_Output_ServerClient.png?raw=true)
 ### Phase 3 - Traffic Adjustment Algorithm
 * What algorithm will be used to determine how individual nodes should adjust their traffic light speeds to improve traffic conditions at their own and other intersections?
   * Currently researching existing Traffic Congestion Models, as well as previous research into this topic.[^5][^6][^7][^16]
