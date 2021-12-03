@@ -18,6 +18,10 @@ Smart Traffic custom model was trained with TensorFlow and TensorFlow object det
 ```python
 !pip install tensorflow==1.15
 ```
+```python
+import tensorflow as tf
+print(tf.__version__)
+```
 3. Import dependencies
 ```
 import os
