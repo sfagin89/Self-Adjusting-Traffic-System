@@ -8,9 +8,8 @@ Smart Traffic custom model was trained with TensorFlow and TensorFlow object det
   i. Images for data training in .jpg format. (For Smart Traffic, the total images used for training is 310 .jpg files). It is advised that there are 300+ images for better data training. Store all the images in *images* folder.
   ii. Label all the images with [Label Img](https://github.com/tzutalin/labelImg). Save the labeled images as .xml files and store them in *annotations* folder.
   * Refer to [Image dataset labeling](https://techzizou.com/dataset-labeling-annotation-tutorial-for-beginners/) for more information.
-  iii. Download TensorFlow object detection API model from here. Smart Traffic uses ssd_mobilenet_v2_coco_2018_03_29 model because it is suitable to be run on raspberry pi.
 
-2. Create the folder and the following directory on Google Drive.
+2. Create the folder and the following directory on Google Drive. [generate_TF1record.py](https://github.com/techzizou/Train-Object-Detection-Model-TF-1.x/blob/main/generate_tfrecord.py)
 
 3. Zip the image and annotation folders and put them to customTF1 folder.
 
