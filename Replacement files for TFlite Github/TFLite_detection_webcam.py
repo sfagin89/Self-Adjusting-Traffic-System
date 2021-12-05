@@ -12,6 +12,18 @@
 # https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/examples/python/label_image.py
 #
 # I added my own method of drawing boxes and labels using OpenCV.
+#
+# Edits Made by Sara Fagin
+# Date: 12/4/21
+# Notes:
+# All changes made to the original code are marked by an 'Edit#' tag
+# These edits were made to work with our specific implementation of
+# TensorFlow Lite, where the number of objects detected was the goal of the
+# detection portion of the code, along with communicating this value to
+# other remote nodes and using these values to control a set of traffic lights.
+#
+# Additional information can be found at our github:
+
 
 # Import packages
 import os
@@ -26,15 +38,35 @@ from threading import Thread
 from datetime import datetime
 import importlib.util
 
-#Global Variable to select Camera
+# Edit#: Global Variable to select Camera
 index = 0
 
-# Creating Socket Object for global use
+# Edit#: Total Traffic Counts for Remote and Local nodes
+## Used to determine which traffic transition mode should be implemented
+local_traffic = 0
+remote_traffic = 0
+
+# Edit#: Traffic Modes and Mode Phases/Counts
+## LED pattern and time each phase should last (sec) for Normal Mode
+normal_phases = [rLED, gLED, yLED]
+normal_counts = [60, 60, 15]
+## LED pattern and time each phase should last (sec) for Altered Mode
+altered_phases = [rLED, gLED]
+altered_counts = [60, 60]
+## Indicates which mode should be running
+### Normal Mode = 0
+### Altered Mode = 1
+traffic_mode = 0
+phase_mode = [normal_phases, altered_phases]
+count_mode = [normal_countsm altered_counts]
+local_traffic_count = 0
+
+# Edit#: Creating Socket Object for global use
 s_global = socket.socket()
 print ("Successfully Created Global Socket")
 
-#Function to Open a Socket Connection as the Server and
-#receive/send traffic information
+# Edit#: Function to Open a Socket Connection as the Server and
+# receive/send traffic information
 def socketServerStart():
 
     # Creating Socket Object
@@ -54,6 +86,8 @@ def socketServerStart():
     s_global.listen(5)
     print ("Socket is Listening")
 
+# Edit#: Function to Open a Socket Connection as the Server and
+# receive/send traffic information
 def socketServerRun(detected_cnt):
 
     # Establish connection with client.
@@ -89,6 +123,8 @@ def socketServerRun(detected_cnt):
     #c.shutdown(socket.SHUT_RDWR)
     c.close()
 
+# Edit#: Function to Open a Socket Connection as the Server and
+# receive/send traffic information
 def socketClient(detected_cnt):
     # Creating Socket
     # AF_INET = IPv4
@@ -136,11 +172,12 @@ def socketClient(detected_cnt):
         #print("Moving to Next Loop Iteration")
     f.close
 
+# Edit#:
 socketMode = input("Run this Node in (S)erver or (C)lient mode?: ")
 if (socketMode == "S"):
     socketServerStart()
 
-#Edit 04: Added Function to write label output to CSV file
+# Edit 04: Added Function to write label output to CSV file
 def logWrite(label_out):
     dateTimeObj = datetime.now()
     timeObj = dateTimeObj.time()
@@ -170,6 +207,15 @@ def logWrite(label_out):
         csvwriter.writerow(row_data)
         # close csv file
         csvfile.close()
+
+# Edit#:
+def traffic_control():
+    global local_traffic
+    global remote_traffic
+    global traffic_mode
+    if abs(local_traffic - remote_traffic) > 4:
+        if local_traffic >= 8 or local_traffic < 4:
+            traffic_mode = 1
 
 
 
@@ -309,7 +355,7 @@ frame_rate_calc = 1
 freq = cv2.getTickFrequency()
 
 # Initialize video stream
-#Edit 10: Added index values to change between cameras 1-4
+# Edit 10: Added index values to change between cameras 1-4
 index = 0
 videostream01 = VideoStream(resolution=(imW,imH),framerate=30).start()
 time.sleep(1)
@@ -323,27 +369,27 @@ time.sleep(1)
 #videostream04 = VideoStream(resolution=(imW,imH),framerate=30).start()
 #time.sleep(1)
 
-#Edit 17: Holds streams to loop through cameras
+# Edit 17: Holds streams to loop through cameras
 streams = [videostream01, videostream02]
 
 #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
 try:
 
     while True:
-        #Edit 05: Replaced with logWrite Function
-        #Edit 01: File to hold output
+        # Edit 05: Replaced with logWrite Function
+        # Edit 01: File to hold output
         #file = open('object_detected', 'w')
 
-        #Add a count variable to index number of objects detected.
-        ##Currently just counts all detected objects, not cars specifically
+        # Edit#: Add a count variable to index number of objects detected.
+        ## Currently just counts all detected objects, not cars specifically
         count = 0
 
-        #Edit 18: Beginning Loop to capture each camera's feed
+        # Edit 18: Beginning Loop to capture each camera's feed
         for frames in streams:
             # Start timer (for calculating frame rate)
             t1 = cv2.getTickCount()
 
-            #Edit 16: Changed this to allow cycling betwen Cameras 1-4
+            # Edit 16: Changed this to allow cycling betwen Cameras 1-4
             # Grab frame from video stream
             #frame1 = videostream01.read()
             frame1 = frames.read()
@@ -391,12 +437,12 @@ try:
                     cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED) # Draw white box to put label text in
                     cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2) # Draw label text
 
-                    #Edit 06:Replaced with logWrite Function
-                    #Edit 02: Begins writing object label to file
+                    # Edit 06:Replaced with logWrite Function
+                    # Edit 02: Begins writing object label to file
                     #file.write(label)
                     #file.write('\n')
                     logWrite(label)
-                    #Edit 12: Added for troubleshooting
+                    # Edit 12: Added for troubleshooting
                     print("Detected a", label)
                     count = count + 1
 
