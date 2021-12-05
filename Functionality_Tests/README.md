@@ -91,7 +91,7 @@ IMPORTANT: The following test requires the python cv2 module. Unless done so out
     ````
 * If the script is functioning as expected, and the LEDs are connected correctly, the following LED pattern should be displayed:
   * Red On/Off -> Yellow On/Off -> Green On/Off -> Red On/Off -> Yellow On/Off -> Red On/Off -> Green On/Off -> Red On/Off -> Green On/Off -> Red On/Off -> Red On/Off -> Red On/Off -> Red On/Off -> Red On/Off -> Red On/Off
-  The above pattern represents 10 seconds of Flashing Normal Cycle, then 10 seconds of Flashing Altered Cycle, and finally 10 seconds of Flashing Error Cycle until starting from the beginning.
+  * The above pattern represents 10 seconds of Flashing Normal Cycle, then 10 seconds of Flashing Altered Cycle, and finally 10 seconds of Flashing Error Cycle until starting from the beginning.
 * To Exit the script, enter ```Ctrl + c```
   * ````
     pi@tnode02:~/Downloads $ python multiproc_test.py
