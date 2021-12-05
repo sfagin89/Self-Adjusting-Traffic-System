@@ -50,7 +50,7 @@ A smart traffic light system that is able to recognize, count, and determine the
   * Pre-trained Model: ssd_mobilenet_v2, Train images: 248 (80%), Test images: 62 (20%)
   ![Result of Custom Model 1](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model_output1.png?raw=true)
   ![Result of Custom Model 2](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model_output2.png?raw=true)
-    * Custom model was trained on Google Colab Pro. Tensorflow model Github repository is cloned directly to Google Colab Pro and the output are saved to Google Drive. The notebook [trainmodel.ipynb](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model/trainmodel.ipynb) contains steps on how to train Smart Traffic's custom model, however, some steps are omitted inside the notebook. It is best to follow instruction on this [readme](https://github.com/sfagin89/SmartTraffic/blob/main/Custom_model/README.md) for accurate steps on how to train Smart Traffic's custom model.
+    * A Custom model was trained on Google Colab Pro. The Tensorflow model Github repository was cloned directly to Google Colab Pro and the output saved to Google Drive. The notebook [trainmodel.ipynb](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model/trainmodel.ipynb) contains steps on how to train Smart Traffic's custom model, however, some steps are omitted inside the notebook. A [readme](https://github.com/sfagin89/SmartTraffic/blob/main/Custom_model/README.md) has been provided with detailed instructions on how to train Smart Traffic's custom model.
 
 
 ### Phase 2 - Node Communication
@@ -195,7 +195,7 @@ A smart traffic light system that is able to recognize, count, and determine the
       64 bytes from 192.168.0.10: icmp_seq=2 ttl=64 time=0.197 ms
       64 bytes from 192.168.0.10: icmp_seq=3 ttl=64 time=0.219 ms
       ````
-### Verify Socket Communication between Client-Host Nodes
+### Verify Socket Communication between Client-Server Nodes
 **The following test should be run on both nodes. In this example the first test uses node01 as the server and node02 as the client, with the second test reversing the positions.**
 * On the server node run the following command:
   * ````
@@ -218,15 +218,18 @@ A smart traffic light system that is able to recognize, count, and determine the
 
 ## Begin Smart Traffic Application
 ### Running TensorFlow Lite:
+* Activate the tflite environment setup previously.
+  * ```source tflite1-env/bin/activate```
+
 * Run the following command to start Tensorflow Lite:
-```python3 TFLite_detection_webcam.py --modeldir=Sample_TFLite_model &```
+  * ```python3 TFLite_detection_webcam.py --modeldir=Sample_TFLite_model &```
 
 * To exit the program, run the following commands to kill the process
-  ```pgrep python``` The resulting number is the process id
-  ```kill -15 <process id>```
+  * ```pgrep python``` The resulting number is the process id
+  * ```kill -15 <process id>```
 
 * If that doesn't work, use the below as a last resort. This can leave Zombie Processes so isn't ideal.
-  ```kill -9 <process id>```
+  * ```kill -9 <process id>```
 
 [^1]: https://www.theguardian.com/technology/2020/feb/03/berlin-artist-uses-99-phones-trick-google-maps-traffic-jam-alert
 [^2]: https://www.tensorflow.org/
