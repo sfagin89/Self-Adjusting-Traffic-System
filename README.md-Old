@@ -69,9 +69,9 @@ A smart traffic light system that is able to recognize, count, and determine the
   ![Current Result of Node Communication between Client and Server Nodes](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Code_Output_ServerClient.png?raw=true)
 ### Phase 3 - Traffic Adjustment Algorithm
 * What algorithm will be used to determine how individual nodes should adjust their traffic light speeds to improve traffic conditions at their own and other intersections?
-  * Currently researching existing Traffic Congestion Models, as well as previous research into this topic.[^5][^6][^7][^15]
+  * Currently researching existing Traffic Congestion Models, as well as previous research into this topic.[^5][^6][^7][^16]
 * Phase 3 Implementation update 11/30/21:
-  * Researched Typical Traffic Signal behavior, Methods for Signal Coordination and Detection Systems.[^14]
+  * Researched Typical Traffic Signal behavior, Methods for Signal Coordination and Detection Systems.[^15]
     * Cycle Length:
       * A full Cycle Length (the amount of time required to display all phases for each direction of an intersection before returning to the starting point) typically range from 1-3 minutes, and are based on traffic volume and conditions of intersections.
       * The goal of signal timing is to find an optimum cycle length for the most efficiency.
@@ -87,7 +87,7 @@ A smart traffic light system that is able to recognize, count, and determine the
       * Tells the signal what to run, how long to run, when to run, etc.
       * Collects information from the intersection through the detection system, decides how to respond, and then tells the traffic signal lights how to operate.
       * CALTRANS 2070 traffic signal controller standards
-  * Paper: Real-time traffic signal optimization model based on average delay time per person.[^15]
+  * Paper: Real-time traffic signal optimization model based on average delay time per person.[^16]
     * Focused on the interrelations between signal parameters (cycle length, split, etc) and evaluation indices (delay time, queue length, number of stops, etc)
       * Delay Time
         * Fixed time signals have been proposed as a method to achieve minimum average delay time.
@@ -108,10 +108,114 @@ A smart traffic light system that is able to recognize, count, and determine the
 * A minimum of 2 nodes will be needed in order to demonstrate the ability of the nodes to communicate with each other, as well as show how the speeds of the lights will adjust at an intersection based on traffic at another intersection.
 
 ## Setting Up the Raspberry Pi as a Traffic Node
-Instructions to configure a raspberry pi as a Traffic Node, as well as physically setting up the pi, have been provided in the Setup_Instructions directory, [HERE](https://github.com/sfagin89/SmartTraffic/blob/main/Setup_Instructions/README.md)
+### Imaging the SD Card:
+**IMPORTANT**: This Project uses the RPi OS "Buster", newer OS's have not been confirmed to work.
+#### Imaging an SD Card with Raspbian Buster on Windows 10:
+* Download Raspbian Buster from the Raspberry Pi Download Site[^12]
+  * The version used here is 2021-05-07-raspios-buster-armhf.img
+* Unzip the Archived Image
+* Insert a blank MicroSD card into your computer
+* Use an imaging software to format and image the card
+  * The application used to image the card here is Rufus[^13]
+  * If the card isn't accessible after the first image, re-image the card.
+### Post-Imaging Pre-Boot Setup (Optional Steps):
+**All of the following steps should be done within the Boot Folder once the SD card is imaged. None of these steps are required, but they make the first boot of the Pi much simpler**
+* Enable SSH by Default
+  * Add a plain text file called **SSH**, with no file extension. This file has been provided here in the directory "Files to Add to SD Card Boot Folder Post-Image"
+* Manually Connect to Wifi
+  * Add a file called **wpa_supplicant.conf**. This file has been provided here in the directory "Files to Add to SD Card Boot Folder Post-Image"
+  * Open the file and change "YOUR_NETWORK_NAME" to your wireless network's SSID, and "YOUR_PASSWORD" to your wireless network's password. This setup requires the network you're connecting to to be using WPA-PSK security.
+* Adjust Resolution (If using a remote desktop client)
+  * Open the file **config.txt**
+  * Uncomment the line ```hdmi_force_hotplug=1```
+  * Uncomment the line ```hdmi_group=1```
+  * Uncomment the line ```hdmi_mode=1 and change the value to 16```
+  * Add the following line to the end of the file ```hdmi_ignore_edid=0xa5000080```
+### First Boot Setup:
+**All of the following steps are done via command line**
+* Assuming the Pi is connected to the network, SSH to it using the default username and password for Raspbian
+  * Username: Pi
+  * Password: raspberry
+* Change the default password using the following command:
+  * ```passwd```
+* Install Updates
+  * ```sudo apt-get update```
+  * ```sudo apt-get dist-upgrade``` (This can take up to an hour)
 
-## Troubleshooting The Raspberry Pi Traffic Node
-Functionality Testing Scripts to help with troubleshooting and setup of a Raspberry Pi Traffic Node have been provided in the Functionality_Tests directory, [HERE](https://github.com/sfagin89/SmartTraffic/blob/main/Functionality_Tests/README.md)
+**Optional Steps**
+* Enable VNC Access
+  * Open the Raspbery Pi Config File
+    * ```sudo raspi-config```
+  * Navigate to Interface Options > VNC
+  * Select Yes to enable VNC Server
+  * Select Finish
+* Set Python3 as default
+  * Open the .bashrc file
+    * ```nano ~/.bashrc```
+  * Type the following on a new line at the end of the file
+    * ```alias python=python3```
+  * Save and exit the file
+  * Run the following command to make the alias permanent
+    * ```source ~/.bashrc```
+
+### Installing TensorFlow Lite:
+* A guide for Installing and Setting up TensorFlow Lite has been provided by EdjeElectronics[^9]. This guide takes you through installing all of the requirements for running TensorFlow Lite as well.
+  * Follow the guide starting at step 1b
+  * After downloading the Repo in step 1b, replace the TFLite_detection_webcam.py file with the one in this repo, located in the **Modified files from TFlite Github** directory.
+  * In step 1d, Option 1 (Google's sample TFLite model) is used for this project.
+* **Once you've finished the setup instructions from the guide, you will need to use the command ```source tflite1-env/bin/activate``` every time you open a new terminal window, or restart the Pi.
+
+### Setting up Ad-Hoc Network between Nodes
+* Wired Ad-Hoc Network
+  * Connect the Raspberry Pi's together with an ethernet cable
+  * Edit the configuration file for the DHCP client daemon on both Pi's
+    * ```sudo nano /etc/dhcpcd.conf```
+  * Uncomment the following lines:
+    * ```interface eth0```
+    * ```static ip_address=192.168.0.#/24``` -- Replace # with a number, this number should be different on each node.
+    * ```static routers=192.168.0.1```
+  * Save and exit the file
+  * Restart the Pi's
+  * Confirm the static IPs are set by running the following command (2 IPs should now be present):
+    * ````
+      pi@tnode01:~ $ hostname -I
+      192.168.0.10 192.X.X.X
+      pi@tnode02:~ $ hostname -I
+      192.168.0.20 192.X.X.X
+      ````
+  * Verify the connection between both nodes by pinging the address of each node from the other.
+    * ````
+      pi@tnode01:~ $ ping 192.168.0.20
+      PING 192.168.0.20 (192.168.0.20) 56(84) bytes of data.
+      64 bytes from 192.168.0.20: icmp_seq=1 ttl=64 time=0.618 ms
+      64 bytes from 192.168.0.20: icmp_seq=2 ttl=64 time=0.208 ms
+      pi@tnode02:~ $ ping 192.168.0.10
+      PING 192.168.0.10 (192.168.0.10) 56(84) bytes of data.
+      64 bytes from 192.168.0.10: icmp_seq=1 ttl=64 time=0.326 ms
+      64 bytes from 192.168.0.10: icmp_seq=2 ttl=64 time=0.197 ms
+      64 bytes from 192.168.0.10: icmp_seq=3 ttl=64 time=0.219 ms
+      ````
+### Verify Socket Communication between Client-Server Nodes
+IMPORTANT: The following test should be run on both nodes. In this example the first test uses node01 as the server and node02 as the client, with the second test reversing the positions.
+
+* On the server node run the following command:
+  * ````
+    pi@tnode01:~/Downloads $ python server_test.py
+    Socket successfully created
+    socket bound to <listening port>
+    socket is listening
+    ````
+* On the client node run the following command:
+  * ````
+    pi@tnode02:~/Downloads $ python client_2to1com_test.py
+    Socket successfully created
+    The socket has successfully connected to node01
+    Thank you for connecting
+    ````
+* On the server node, you should see the following response once the client node has connected and then close.
+  * ````
+    Got connection from ('192.168.0.20', <source port>)
+    ````
 
 ## Begin Smart Traffic Application
 ### Running TensorFlow Lite:
@@ -139,6 +243,8 @@ Functionality Testing Scripts to help with troubleshooting and setup of a Raspbe
 [^9]: https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi/blob/master/Raspberry_Pi_Guide.md
 [^10]: https://www.youtube.com/watch?v=aimSGOAUI8Y&ab_channel=EdjeElectronics
 [^11]: https://www.geeks3d.com/20190930/raspberry-pi-4-vs-raspberry-pi-3-cpu-and-gpu-benchmarks/
-[^14]: https://www.foresitegroup.net/a-beginners-guide-to-signal-timing/
-[^15]: https://journals.sagepub.com/doi/full/10.1177/1687814015613500
-[^16]: https://www.geeksforgeeks.org/socket-programming-python/
+[^12]: https://downloads.raspberrypi.org/raspios_armhf/images/
+[^13]: https://rufus.ie/en/
+[^14]: https://www.geeksforgeeks.org/socket-programming-python/
+[^15]: https://www.foresitegroup.net/a-beginners-guide-to-signal-timing/
+[^16]: https://journals.sagepub.com/doi/full/10.1177/1687814015613500

@@ -92,3 +92,7 @@
       64 bytes from 192.168.0.10: icmp_seq=2 ttl=64 time=0.197 ms
       64 bytes from 192.168.0.10: icmp_seq=3 ttl=64 time=0.219 ms
       ````
+
+[^12]: https://downloads.raspberrypi.org/raspios_armhf/images/
+[^13]: https://rufus.ie/en/
+[^9]: https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi/blob/master/Raspberry_Pi_Guide.md
