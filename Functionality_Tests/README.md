@@ -15,7 +15,7 @@ IMPORTANT: The following test should be run on both nodes. In this example the f
 * client_2to1com_test.py
 * server_test.py
 
-If this test does not behave as detailed below, refer back to the section on **Setting up Ad-Hoc Network between Nodes** in the [Main README](https://github.com/sfagin89/SmartTraffic/blob/main/Custom_model/README.md).
+If this test does not behave as detailed below, refer back to the section on **Setting up Ad-Hoc Network between Nodes** in the [Main README](https://github.com/sfagin89/SmartTraffic/blob/main/README.md).
 
 ### Test Instructions
 * On the server node run the following command:

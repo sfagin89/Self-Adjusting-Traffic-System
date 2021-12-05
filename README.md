@@ -50,7 +50,7 @@ A smart traffic light system that is able to recognize, count, and determine the
   * Pre-trained Model: ssd_mobilenet_v2, Train images: 248 (80%), Test images: 62 (20%)
   ![Result of Custom Model 1](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model_output1.png?raw=true)
   ![Result of Custom Model 2](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model_output2.png?raw=true)
-    * A Custom model was trained on Google Colab Pro. The Tensorflow model Github repository was cloned directly to Google Colab Pro and the output saved to Google Drive. The notebook [trainmodel.ipynb](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model/trainmodel.ipynb) contains steps on how to train Smart Traffic's custom model, however, some steps are omitted inside the notebook. A [readme](https://github.com/sfagin89/SmartTraffic/blob/main/README.md) has been provided with detailed instructions on how to train Smart Traffic's custom model.
+    * A Custom model was trained on Google Colab Pro. The Tensorflow model Github repository was cloned directly to Google Colab Pro and the output saved to Google Drive. The notebook [trainmodel.ipynb](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model/trainmodel.ipynb) contains steps on how to train Smart Traffic's custom model, however, some steps are omitted inside the notebook. A [readme](https://github.com/sfagin89/SmartTraffic/blob/main/Custom_model/README.md) has been provided with detailed instructions on how to train Smart Traffic's custom model.
 
 
 ### Phase 2 - Node Communication
@@ -196,7 +196,8 @@ A smart traffic light system that is able to recognize, count, and determine the
       64 bytes from 192.168.0.10: icmp_seq=3 ttl=64 time=0.219 ms
       ````
 ### Verify Socket Communication between Client-Server Nodes
-**The following test should be run on both nodes. In this example the first test uses node01 as the server and node02 as the client, with the second test reversing the positions.**
+IMPORTANT: The following test should be run on both nodes. In this example the first test uses node01 as the server and node02 as the client, with the second test reversing the positions.
+
 * On the server node run the following command:
   * ````
     pi@tnode01:~/Downloads $ python server_test.py
