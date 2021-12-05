@@ -56,8 +56,6 @@ def flash_led():
                     temp = alt_queue.get()
                 alt_queue.put(temp)
 
-
-
             if mode == 1:
                 led = norm_queue.get()
                 norm_queue.put(led)
@@ -104,4 +102,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    print("script exiting\n")
+    print("\nscript exiting\n")
