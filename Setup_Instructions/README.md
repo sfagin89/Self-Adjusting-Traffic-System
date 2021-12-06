@@ -39,6 +39,7 @@
   * ```sudo apt-get update```
   * ```sudo apt-get dist-upgrade``` (This can take up to an hour)
 
+
 **Optional Steps**
 * Enable VNC Access
   * Open the Raspbery Pi Config File
@@ -61,6 +62,16 @@
   * After downloading the Repo in step 1b, replace the TFLite_detection_webcam.py file with the one in this repo, located in the **Modified files from TFlite Github** directory.
   * In step 1d, Option 1 (Google's sample TFLite model) is used for this project.
 * **Once you've finished the setup instructions from the guide, you will need to use the command ```source tflite1-env/bin/activate``` every time you open a new terminal window, or restart the Pi.
+* From within the active tflite1 environment, install the RPi.GPIO package
+  * ````
+    (tflite1-env) pi@tnode01:~/tflite1 $ pip3 install RPi.GPIO
+    Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
+    Collecting RPi.GPIO
+      Downloading https://www.piwheels.org/simple/rpi-gpio/RPi.GPIO-0.7.0-cp37-cp37m-linux_armv7l.whl (69kB)
+        100% |████████████████████████████████| 71kB 346kB/s
+    Installing collected packages: RPi.GPIO
+    Successfully installed RPi.GPIO-0.7.0
+    ````
 
 ### Setting up Ad-Hoc Network between Nodes
 * Wired Ad-Hoc Network

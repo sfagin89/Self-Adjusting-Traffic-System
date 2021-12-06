@@ -37,6 +37,18 @@ import socket
 from threading import Thread
 from datetime import datetime
 import importlib.util
+# Needed for Traffic Control & Multiprocessing
+import RPi.GPIO as GPIO
+import multiprocessing
+from queue import Queue
+
+manager = multiprocessing.Manager()
+shared_queue = manager.Queue()
+
+# GPIO Pins
+rLED = 25
+yLED = 8
+gLED = 7
 
 # Edit#: Global Variable to select Camera
 index = 0
@@ -53,12 +65,13 @@ normal_counts = [60, 60, 15]
 ## LED pattern and time each phase should last (sec) for Altered Mode
 altered_phases = [rLED, gLED]
 altered_counts = [60, 60]
+
 ## Indicates which mode should be running
-### Normal Mode = 0
-### Altered Mode = 1
+### Error Mode = 0
+### Normal Mode = 1
+### Altered Mode = 2
 traffic_mode = 0
-phase_mode = [normal_phases, altered_phases]
-count_mode = [normal_countsm altered_counts]
+
 local_traffic_count = 0
 
 # Edit#: Creating Socket Object for global use
@@ -95,8 +108,10 @@ def socketServerRun(detected_cnt):
     print ('Got connection from', addr )
 
     # Test, respond to connection.
-    msg = "Objects Detected on Server Node: %d\n" % count
+    #msg = "Objects Detected on Server Node: %d\n" % count
+    msg = "%d" % count
     c.send(msg.encode())
+
     #Sending content of own object_detected file back
     #with open('object_detected.csv', 'rb') as f:
     #    c.sendfile(f,0)
@@ -108,6 +123,9 @@ def socketServerRun(detected_cnt):
     print("Printing Entry to Console")
     #print to the console
     print(rcvfile.decode())
+    global remote_traffic
+    remote_traffic = int(rcvfile.decode())
+    #remote_traffic = rcvfile.decode()
     print("Writing Entry to File")
     f.write(rcvfile)
         #print("Receiving Next Entry")
@@ -140,7 +158,7 @@ def socketClient(detected_cnt):
     port = 3600
 
     try:
-        host_ip = socket.gethostbyname('192.168.0.20')
+        host_ip = socket.gethostbyname('192.168.86.26')
     except socket.gaierror:
 
         # this means could not resolve the host
@@ -152,8 +170,10 @@ def socketClient(detected_cnt):
 
     print ("The socket has successfully connected to Server Node")
 
-    msg = "Objects Detected on Client Node: %d\n" % count
+    #msg = "Objects Detected on Client Node: %d\n" % count
+    msg = "%d" % count
     s.send(msg.encode())
+
     #Sending content of own object_detected file back
     #with open('object_detected.csv', 'rb') as f:
     #    s.sendfile(f,0)
@@ -165,6 +185,9 @@ def socketClient(detected_cnt):
     print("Printing Entry to Console")
     #print to the console
     print(rcvfile.decode())
+    global remote_traffic
+    remote_traffic = int(rcvfile.decode())
+    #remote_traffic = rcvfile.decode()
     print("Writing Entry to File")
     f.write(rcvfile)
         #print("Receiving Next Entry")
@@ -208,17 +231,94 @@ def logWrite(label_out):
         # close csv file
         csvfile.close()
 
-# Edit#:
+# Edit#: Added Traffic Light Controller
 def traffic_control():
-    global local_traffic
-    global remote_traffic
-    global traffic_mode
-    if abs(local_traffic - remote_traffic) > 4:
-        if local_traffic >= 8 or local_traffic < 4:
-            traffic_mode = 1
+    # Setting up Normal Traffic Phase Queue
+    # Pattern: Red -> Green -> Yellow
+    norm_queue = Queue()
+    norm_queue.put(rLED)
+    norm_queue.put(gLED)
+    norm_queue.put(yLED)
 
+    # Setting up Alternate Traffic Phase Queue
+    # Pattern: Red -> Green
+    alt_queue = Queue()
+    alt_queue.put(rLED)
+    alt_queue.put(gLED)
 
+    # Setting up Error Traffic Phase Queue
+    # Pattern: Red
+    err_queue = Queue()
+    err_queue.put(rLED)
 
+    # Setting up GPIO for LEDs
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(rLED, GPIO.OUT)
+    GPIO.setup(yLED, GPIO.OUT)
+    GPIO.setup(gLED, GPIO.OUT)
+    GPIO.output(rLED, GPIO.LOW)
+    GPIO.output(yLED, GPIO.LOW)
+    GPIO.output(gLED, GPIO.LOW)
+
+    # Setting default value of mode to 0
+    ## 0 = Error Phase
+    ## 1 = Normal Phase
+    ## 2 = Altered Phase
+    mode = 0
+    time.sleep(1)
+    try:
+        while True:
+            # If A mode value has been added to the shared_queue
+            ## This indicates a phase change.
+            ## Otherwise continue using current value of mode
+            if not shared_queue.empty():
+                mode_temp = shared_queue.get()
+                if not mode == mode_temp:
+                    mode = mode_temp
+                    #making sure norm_queue is reset when mode changes
+                    temp = norm_queue.get()
+                    if temp != gLED:
+                        norm_queue.put(temp)
+                        temp = norm_queue.get()
+                        if temp != gLED:
+                            norm_queue.put(temp)
+                            temp = norm_queue.get()
+                    norm_queue.put(temp)
+                    #making sure alt_queue is reset when mode changes
+                    temp = alt_queue.get()
+                    if temp != gLED:
+                        alt_queue.put(temp)
+                        temp = alt_queue.get()
+                    alt_queue.put(temp)
+
+            if mode == 1:
+                led = norm_queue.get()
+                norm_queue.put(led)
+            elif mode == 2:
+                led = alt_queue.get()
+                alt_queue.put(led)
+            else:
+                led = err_queue.get()
+                err_queue.put(led)
+
+            # Currently Flashes LEDs for each stage of phase
+            GPIO.output(led, GPIO.HIGH)
+            time.sleep(1)
+            GPIO.output(led, GPIO.LOW)
+            time.sleep(1)
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+        #print("\nflash_led exiting\n")
+        pass
+
+# Adds a mode value to the shared_queue, prompting traffic_control to change
+## phases.
+def mode_set(traffic_mode):
+    try:
+        shared_queue.put(traffic_mode)
+    except KeyboardInterrupt:
+        #print("ctrl_led exiting\n")
+        pass
 
 # Define VideoStream class to handle streaming of video from webcam in separate processing thread
 # Source - Adrian Rosebrock, PyImageSearch: https://www.pyimagesearch.com/2015/12/28/increasing-raspberry-pi-fps-with-python-and-opencv/
@@ -372,6 +472,10 @@ time.sleep(1)
 # Edit 17: Holds streams to loop through cameras
 streams = [videostream01, videostream02]
 
+subproc = multiprocessing.Process(target=traffic_control, args=())
+subproc.start()
+#subproc.join()
+
 #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
 try:
 
@@ -453,7 +557,15 @@ try:
         else:
             print("No Socket Mode Selected")
 
+        local_traffic = count
         print("======< Objects Detected: %d >======" % (count))
+        print("Local Node Object Count: %d" % (local_traffic))
+        print("Remote Node Object Count: %d" % (remote_traffic))
+
+        if local_traffic > remote_traffic:
+            mode_set(2)
+        else:
+            mode_set(1)
 
         # Draw framerate in corner of frame
         #cv2.putText(frame,'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
@@ -472,6 +584,8 @@ try:
         # Press 'q' to quit
         if cv2.waitKey(1) == ord('q'):
             break
+
+        time.sleep(10)
 except KeyboardInterrupt: #Edit 15: Added to allow graceful exit using Ctrl+c
     #Edit 07: No longer needed, file closed in logWrite Function
     #Edit 03: Closes the written to file
