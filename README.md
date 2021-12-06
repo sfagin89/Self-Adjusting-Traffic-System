@@ -119,7 +119,19 @@ Functionality Testing Scripts to help with troubleshooting and setup of a Raspbe
   * ```source tflite1-env/bin/activate```
 
 * Run the following command to start Tensorflow Lite:
-  * ```python3 TFLite_detection_webcam.py --modeldir=Sample_TFLite_model &```
+  * ```python3 TFLite_detection_webcam.py --modeldir=Sample_TFLite_model```
+
+* You will then be prompted to run the node in Server or Client mode. Assuming the nodes were setup using the [Setup_Instructions](https://github.com/sfagin89/SmartTraffic/blob/main/Setup_Instructions/README.md#setting-up-ad-hoc-network-between-nodes), Node02 should be run as the Server, and Node01 as the client
+  * ````
+    (tflite1-env) pi@tnode01:~/tflite1 $ python3 TFLite_detection_webcam.py --modeldir=Sample_TFLite_model
+    Successfully Created Global Socket
+    Run this Node in (S)erver or (C)lient mode?: C
+    ````
+  * ````
+    (tflite1-env) pi@tnode02:~/tflite1 $ python3 TFLite_detection_webcam.py --modeldir=Sample_TFLite_model
+    Successfully Created Global Socket
+    Run this Node in (S)erver or (C)lient mode?: S
+    ````
 
 * To exit the program, run the following commands to kill the process
   * ```pgrep python``` The resulting number is the process id
