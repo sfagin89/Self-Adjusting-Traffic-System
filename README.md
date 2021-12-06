@@ -101,6 +101,13 @@ A smart traffic light system that is able to recognize, count, and determine the
     * In both mathematical programming approaches and simulation-based systems, minimum delay time at intersection is a very important objective.
 * Current Planned Approach:
   * Proof of Concept: Reduce Signals from 3 to 2 when the difference in vehicles per intersection exceeds a predetermined threshold.
+* Phase 3 Implementation update 12/6/21:
+  * Determined that multiprocessing would be required to run both the light controller and the main script that sends update signals to it.
+  * Successfully implemented multiprocessing in the main script.
+    * A Function called traffic_control, used to cycle traffic lights through a set of phases depending on the current traffic mode. Mode is taken from a shared queue that is added to by a separate function called mode_set.
+    * traffic_control loops indefinitely once it's called as a separate process from within the main script. Each loop of the main script determines whether the traffic mode needs to change, then sends the new mode to mode_set, which adds the value to the queue for the traffic_control to read.
+      * The traffic mode is determined based on the difference in vehicles between the two intersections. If the local node has a higher number of cars then the remote node, the local node will set the traffic mode to the Altered State. Otherwise the mode is set to Normal State.
+      * This is not the intended final implementation of the traffic algorithm, just a place holder to confirm everything works.
 
 
 ## Physical Prototype for Testing Setup
@@ -133,12 +140,7 @@ Functionality Testing Scripts to help with troubleshooting and setup of a Raspbe
     Run this Node in (S)erver or (C)lient mode?: S
     ````
 
-* To exit the program, run the following commands to kill the process
-  * ```pgrep python``` The resulting number is the process id
-  * ```kill -15 <process id>```
-
-* If that doesn't work, use the below as a last resort. This can leave Zombie Processes so isn't ideal.
-  * ```kill -9 <process id>```
+* To exit the program, enter Ctrl + C
 
 [^1]: https://www.theguardian.com/technology/2020/feb/03/berlin-artist-uses-99-phones-trick-google-maps-traffic-jam-alert
 [^2]: https://www.tensorflow.org/
@@ -154,3 +156,4 @@ Functionality Testing Scripts to help with troubleshooting and setup of a Raspbe
 [^14]: https://www.foresitegroup.net/a-beginners-guide-to-signal-timing/
 [^15]: https://journals.sagepub.com/doi/full/10.1177/1687814015613500
 [^16]: https://www.geeksforgeeks.org/socket-programming-python/
+[^17]: https://zetcode.com/python/multiprocessing/
