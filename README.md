@@ -46,12 +46,13 @@ A smart traffic light system that is able to recognize, count, and determine the
 * Phase 1 Implementation update 11/28/21:
   * Adjusted viewing angle of cameras from front to side view. This, in addition to reducing 'clutter' appears to have improved the accuracy of the detection model.
   ![Result of Initial TFLite Test 4](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Object_Detection_Test_4_113021.png?raw=true)
-  * Additionally, a new custom model based on images of the toy cars used in our demo has been trained. Currently in the process of converting it work with TensorFlow Lite.
+  * Additionally, a new custom model based on images of the toy cars used in our demo has been trained.
   * Pre-trained Model: ssd_mobilenet_v2, Train images: 248 (80%), Test images: 62 (20%)
   ![Result of Custom Model 1](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model_output1.png?raw=true)
   ![Result of Custom Model 2](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model_output2.png?raw=true)
     * The Custom model was trained on Google Colab Pro. The Tensorflow model Github repository was cloned directly to Google Colab Pro and the output saved to Google Drive. The notebook [trainmodel.ipynb](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model/trainmodel.ipynb) contains steps on how to train Smart Traffic's custom model. A [readme](https://github.com/sfagin89/SmartTraffic/blob/main/Custom_model/README.md) has been provided with detailed instructions on how to train Smart Traffic's custom model.
-    * In addition to building custom model, the model was converted to TensorFlow Lite to run on Raspberry Pi. This [readme] contains steps on how to convert TensorFlow to TensorFlow Lite object detection model. The TensorFlow Lite model for this project is provided in [TFLite_model](https://github.com/sfagin89/Self-Adjusting-Traffic-System/tree/main/Custom_model/TFLite_model). Image below is an example of TensorFlow Lite custom model ran on Raspberry Pi 3.
+    * In addition to building custom model, the model was converted to TensorFlow Lite to run on Raspberry Pi. This [readme](https://github.com/sfagin89/SmartTraffic/blob/main/Custom_model/README.md) contains a guide on how to convert TensorFlow to TensorFlow Lite object detection model. The TensorFlow Lite model for this project is provided on [TFLite_model](https://github.com/sfagin89/Self-Adjusting-Traffic-System/tree/main/Custom_model/TFLite_model). Image below is an example of TensorFlow Lite custom model ran on Raspberry Pi 3.
+
   ![Result of Custom Model TensorFlow Lite](https://github.com/sfagin89/SmartTraffic/blob/main/Images/tensorflow_lite_objdetect.png?raw=true)
 
 
