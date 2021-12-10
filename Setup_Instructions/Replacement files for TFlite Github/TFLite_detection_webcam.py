@@ -43,15 +43,32 @@ import multiprocessing
 from queue import Queue
 
 manager = multiprocessing.Manager()
-shared_queue = manager.Queue()
+#shared_queue = manager.Queue()
+shared_queue1 = manager.Queue()
+shared_queue2 = manager.Queue()
+shared_queue3 = manager.Queue()
+shared_queue4 = manager.Queue()
 
 # GPIO Pins
-rLED = 25
-yLED = 8
-gLED = 7
+## Supports up to 4 Traffic Light Sets
+rLED1 = 25  # Traffic Light 1
+yLED1 = 8   # Traffic Light 1
+gLED1 = 7   # Traffic Light 1
+rLED2 = 16  # Traffic Light 2
+yLED2 = 20  # Traffic Light 2
+gLED2 = 21  # Traffic Light 2
+rLED3 = 2   # Traffic Light 3
+yLED3 = 3   # Traffic Light 3
+gLED3 = 4   # Traffic Light 3
+rLED4 = 17  # Traffic Light 4
+yLED4 = 27  # Traffic Light 4
+gLED4 = 22  # Traffic Light 4
 
 # Edit#: Global Variable to select Camera
 index = 0
+
+# Debug Mode, 1 = On, 0 = Off
+debug = 0
 
 # Edit#: Total Traffic Counts for Remote and Local nodes
 ## Used to determine which traffic transition mode should be implemented
@@ -60,10 +77,16 @@ remote_traffic = 0
 
 # Edit#: Traffic Modes and Mode Phases/Counts
 ## LED pattern and time each phase should last (sec) for Normal Mode
-normal_phases = [rLED, gLED, yLED]
-normal_counts = [60, 60, 15]
+normal_phases1 = [rLED1, gLED1, yLED1]
+normal_phases2 = [rLED2, gLED2, yLED2]
+normal_phases3 = [rLED3, gLED3, yLED3]
+normal_phases4 = [rLED4, gLED4, yLED4]
+normal_counts = [60, 50, 10]
 ## LED pattern and time each phase should last (sec) for Altered Mode
-altered_phases = [rLED, gLED]
+altered_phases1 = [rLED1, gLED1]
+altered_phases2 = [rLED2, gLED2]
+altered_phases3 = [rLED3, gLED3]
+altered_phases4 = [rLED4, gLED4]
 altered_counts = [60, 60]
 
 ## Indicates which mode should be running
@@ -76,7 +99,8 @@ local_traffic_count = 0
 
 # Edit#: Creating Socket Object for global use
 s_global = socket.socket()
-print ("Successfully Created Global Socket")
+if debug:
+    print ("Successfully Created Global Socket")
 
 # Edit#: Function to Open a Socket Connection as the Server and
 # receive/send traffic information
@@ -105,7 +129,7 @@ def socketServerRun(detected_cnt):
 
     # Establish connection with client.
     c, addr = s_global.accept()
-    print ('Got connection from', addr )
+    print ('\nGot connection from', addr )
 
     # Test, respond to connection.
     #msg = "Objects Detected on Server Node: %d\n" % count
@@ -120,13 +144,15 @@ def socketServerRun(detected_cnt):
     rcvfile = c.recv(1024)
     f = open('rcvd_file.txt','wb')
     #while rcvfile:
-    print("Printing Entry to Console")
-    #print to the console
-    print(rcvfile.decode())
+    if debug:
+        print("Printing Entry to Console")
+        #print to the console
+        print(rcvfile.decode())
     global remote_traffic
     remote_traffic = int(rcvfile.decode())
     #remote_traffic = rcvfile.decode()
-    print("Writing Entry to File")
+    if debug:
+        print("Writing Entry to File\n")
     f.write(rcvfile)
         #print("Receiving Next Entry")
         #rcvfile = c.recv(1024)
@@ -150,7 +176,8 @@ def socketClient(detected_cnt):
     try:
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        print ("Successfully Created Local Socket")
+        if debug:
+            print ("\nSuccessfully Created Local Socket")
     except socket.error as err:
         print ("Socket Creation Failed with Error %s" %(err))
 
@@ -168,7 +195,8 @@ def socketClient(detected_cnt):
     # connecting to the server
     s.connect((host_ip, port))
 
-    print ("The socket has successfully connected to Server Node")
+    if debug:
+        print ("The socket has successfully connected to Server Node")
 
     #msg = "Objects Detected on Client Node: %d\n" % count
     msg = "%d" % count
@@ -182,13 +210,15 @@ def socketClient(detected_cnt):
     rcvfile = s.recv(1024)
     f = open('rcvd_file.txt','wb')
     #while rcvfile:
-    print("Printing Entry to Console")
-    #print to the console
-    print(rcvfile.decode())
+    if debug:
+        print("Printing Entry to Console")
+        #print to the console
+        print(rcvfile.decode())
     global remote_traffic
     remote_traffic = int(rcvfile.decode())
     #remote_traffic = rcvfile.decode()
-    print("Writing Entry to File")
+    if debug:
+        print("Writing Entry to File\n")
     f.write(rcvfile)
         #print("Receiving Next Entry")
         #rcvfile = s.recv(1024)
@@ -232,33 +262,70 @@ def logWrite(label_out):
         csvfile.close()
 
 # Edit#: Added Traffic Light Controller
-def traffic_control():
+def traffic_control(light_num, shared_queue):
+    if light_num == 1:
+        if debug:
+            print("traffic process 1")
+        LED1 = rLED1
+        LED2 = gLED1
+        LED3 = yLED1
+        aLED1 = rLED1
+        aLED2 = gLED1
+        eLED = rLED1
+    if light_num == 2:
+        if debug:
+            print("traffic process 2")
+        LED1 = rLED2
+        LED2 = gLED2
+        LED3 = yLED2
+        aLED1 = rLED2
+        aLED2 = gLED2
+        eLED = rLED2
+    if light_num == 3:
+        if debug:
+            print("traffic process 3")
+        LED1 = gLED3
+        LED2 = yLED3
+        LED3 = rLED3
+        aLED1 = gLED3
+        aLED2 = rLED3
+        eLED = rLED3
+    if light_num == 4:
+        if debug:
+            print("traffic process 4")
+        LED1 = gLED4
+        LED2 = yLED4
+        LED3 = rLED4
+        aLED1 = gLED4
+        aLED2 = rLED4
+        eLED = rLED4
     # Setting up Normal Traffic Phase Queue
     # Pattern: Red -> Green -> Yellow
     norm_queue = Queue()
-    norm_queue.put(rLED)
-    norm_queue.put(gLED)
-    norm_queue.put(yLED)
+    norm_queue.put(LED1)
+    norm_queue.put(LED2)
+    norm_queue.put(LED3)
 
     # Setting up Alternate Traffic Phase Queue
     # Pattern: Red -> Green
     alt_queue = Queue()
-    alt_queue.put(rLED)
-    alt_queue.put(gLED)
+    alt_queue.put(aLED1)
+    alt_queue.put(aLED2)
 
     # Setting up Error Traffic Phase Queue
     # Pattern: Red
     err_queue = Queue()
-    err_queue.put(rLED)
+    err_queue.put(eLED)
 
     # Setting up GPIO for LEDs
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(rLED, GPIO.OUT)
-    GPIO.setup(yLED, GPIO.OUT)
-    GPIO.setup(gLED, GPIO.OUT)
-    GPIO.output(rLED, GPIO.LOW)
-    GPIO.output(yLED, GPIO.LOW)
-    GPIO.output(gLED, GPIO.LOW)
+    GPIO.setup(LED1, GPIO.OUT)
+    GPIO.setup(LED2, GPIO.OUT)
+    GPIO.setup(LED3, GPIO.OUT)
+
+    GPIO.output(LED1, GPIO.LOW)
+    GPIO.output(LED2, GPIO.LOW)
+    GPIO.output(LED3, GPIO.LOW)
 
     # Setting default value of mode to 0
     ## 0 = Error Phase
@@ -277,16 +344,16 @@ def traffic_control():
                     mode = mode_temp
                     #making sure norm_queue is reset when mode changes
                     temp = norm_queue.get()
-                    if temp != gLED:
+                    if temp != LED1:
                         norm_queue.put(temp)
                         temp = norm_queue.get()
-                        if temp != gLED:
+                        if temp != LED1:
                             norm_queue.put(temp)
                             temp = norm_queue.get()
                     norm_queue.put(temp)
                     #making sure alt_queue is reset when mode changes
                     temp = alt_queue.get()
-                    if temp != gLED:
+                    if temp != LED1:
                         alt_queue.put(temp)
                         temp = alt_queue.get()
                     alt_queue.put(temp)
@@ -305,7 +372,7 @@ def traffic_control():
             GPIO.output(led, GPIO.HIGH)
             time.sleep(1)
             GPIO.output(led, GPIO.LOW)
-            time.sleep(1)
+            #time.sleep(1)
     except KeyboardInterrupt:
         GPIO.cleanup()
         #print("\nflash_led exiting\n")
@@ -315,7 +382,10 @@ def traffic_control():
 ## phases.
 def mode_set(traffic_mode):
     try:
-        shared_queue.put(traffic_mode)
+        shared_queue1.put(traffic_mode)
+        shared_queue2.put(traffic_mode)
+        shared_queue3.put(traffic_mode)
+        shared_queue4.put(traffic_mode)
     except KeyboardInterrupt:
         #print("ctrl_led exiting\n")
         pass
@@ -462,18 +532,27 @@ time.sleep(1)
 index = 4
 videostream02 = VideoStream(resolution=(imW,imH),framerate=30).start()
 time.sleep(1)
-#index =
-#videostream03 = VideoStream(resolution=(imW,imH),framerate=30).start()
-#time.sleep(1)
-#index =
-#videostream04 = VideoStream(resolution=(imW,imH),framerate=30).start()
-#time.sleep(1)
+index = 8
+videostream03 = VideoStream(resolution=(imW,imH),framerate=30).start()
+time.sleep(1)
+index = 20
+videostream04 = VideoStream(resolution=(imW,imH),framerate=30).start()
+time.sleep(1)
 
 # Edit 17: Holds streams to loop through cameras
 streams = [videostream01, videostream02]
 
-subproc = multiprocessing.Process(target=traffic_control, args=())
-subproc.start()
+subproc1 = multiprocessing.Process(target=traffic_control, args=(1, shared_queue1))
+subproc2 = multiprocessing.Process(target=traffic_control, args=(2, shared_queue2))
+subproc3 = multiprocessing.Process(target=traffic_control, args=(3, shared_queue3))
+subproc4 = multiprocessing.Process(target=traffic_control, args=(4, shared_queue4))
+subproc1.start()
+time.sleep(1)
+subproc2.start()
+time.sleep(1)
+subproc3.start()
+time.sleep(1)
+subproc4.start()
 #subproc.join()
 
 #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
@@ -564,8 +643,14 @@ try:
 
         if local_traffic > remote_traffic:
             mode_set(2)
+            if debug:
+                print("Local Traffic Greater than Remote Traffic.")
+            print("Running Altered Traffic Phase\n")
         else:
             mode_set(1)
+            if debug:
+                print("Local Traffic Less than or Equal to Remote Traffic.")
+            print("Running Normal Traffic Phase\n")
 
         # Draw framerate in corner of frame
         #cv2.putText(frame,'FPS: {0:.2f}'.format(frame_rate_calc),(30,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,255,0),2,cv2.LINE_AA)
@@ -585,7 +670,7 @@ try:
         if cv2.waitKey(1) == ord('q'):
             break
 
-        time.sleep(10)
+        time.sleep(12)
 except KeyboardInterrupt: #Edit 15: Added to allow graceful exit using Ctrl+c
     #Edit 07: No longer needed, file closed in logWrite Function
     #Edit 03: Closes the written to file

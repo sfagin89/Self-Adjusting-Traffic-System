@@ -96,7 +96,7 @@ A smart traffic light system that is able to recognize, count, and determine the
     * Australian Road Research Board method (ARRB)
       * Considers both number of stops and delay time
     * New models have been proposed, introducing changes in signal models and objectives
-      * Cedar & Reshetnik proposed two signal models for under-saturated and over-saturated intersections, using minimization of maximum queue length and accumulative queue length as two objective functions.
+      * Cedar & Reshetnik proposed two signal models for under-saturated and over-saturated intersections, using minimization of maximum queue length and accumulative queue length as two objective functions.[^16]
       * Fuzzy Logic
     * In both mathematical programming approaches and simulation-based systems, minimum delay time at intersection is a very important objective.
 * Current Planned Approach:
@@ -155,5 +155,6 @@ Functionality Testing Scripts to help with troubleshooting and setup of a Raspbe
 [^11]: https://www.geeks3d.com/20190930/raspberry-pi-4-vs-raspberry-pi-3-cpu-and-gpu-benchmarks/
 [^14]: https://www.foresitegroup.net/a-beginners-guide-to-signal-timing/
 [^15]: https://journals.sagepub.com/doi/full/10.1177/1687814015613500
-[^16]: https://www.geeksforgeeks.org/socket-programming-python/
-[^17]: https://zetcode.com/python/multiprocessing/
+[^16]: https://link.springer.com/article/10.1057/palgrave.jors.2601138
+[^17]: https://www.geeksforgeeks.org/socket-programming-python/
+[^18]: https://zetcode.com/python/multiprocessing/
