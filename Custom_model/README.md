@@ -1,6 +1,17 @@
 # Training custom model with Tensorflow and Google Colab Pro
 
-Smart Traffic custom model was trained with TensorFlow and TensorFlow object detection API on Google Colab Pro. The steps on how to train custom model is based on [techzizou's tutorial](https://medium.com/geekculture/training-a-model-for-custom-object-detection-using-tensorflow-1-x-on-google-colab-564d3e62e9ef) and the codes are from there. However, some codes have been adjusted and it is best to follow [trainmodel.ipynb](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model/trainmodel.ipynb). The trainmodel.ipynb notebook contains detailed steps on how to run and train custom model. The steps below are the same as what is written on the notebook.
+Smart Traffic custom model was trained with TensorFlow and TensorFlow object detection API on Google Colab Pro. The steps on how to train custom model is based on [techzizou's tutorial](https://medium.com/geekculture/training-a-model-for-custom-object-detection-using-tensorflow-1-x-on-google-colab-564d3e62e9ef) and the codes are from there (credits to techzizou). However, some codes have been slightly modified and it is best to follow [trainmodel.ipynb](https://github.com/sfagin89/SmartTraffic/blob/main/Images/Custom_model/trainmodel.ipynb). The trainmodel.ipynb notebook contains detailed steps on how to run and train custom model. The detailed steps written below are the same as what is written on the notebook.
+
+The custom model is created via TensorFlow. In order for the model to run efficiently on Raspberry Pi, the custom model needs to be converted to TensorFlow Lite model. Follow the steps [here](https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi) (credits to EdjeElectronics for the guide) to convert TensorFlow to TensorFlow Lite object detection model. Note that there are some slight modification to the set up. Things to note are:
+* Smart Traffic custom model was trained with ssd_mobilenet_v2_coco model and uses TensorFlow 1.15.
+* bazel version for TensorFlow 1.15 is 0.24.1
+* bazel 0.24.1 is compatible with Microsoft Visual Studio 2017 (including its build tools)
+* If encounter ModuleNotFoundError: No module named 'cv2', make sure to
+```
+pip install opencv-python
+```
+
+Smart Traffic's custom TensorFlow Lite model is provided on [TFLite_model](https://github.com/sfagin89/Self-Adjusting-Traffic-System/tree/main/Custom_model/TFLite_model).
 
 ## Detailed steps on how to train custom model
 
