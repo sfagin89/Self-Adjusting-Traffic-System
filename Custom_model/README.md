@@ -11,6 +11,8 @@ The custom model is created via TensorFlow. In order for the model to run effici
 pip install opencv-python
 ```
 
+Smart Traffic's custom TensorFlow Lite model is provided in [TFLite_model]().
+
 ## Detailed steps on how to train custom model
 
 **Colab Setup**
