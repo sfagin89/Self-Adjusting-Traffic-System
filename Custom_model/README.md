@@ -11,7 +11,7 @@ The custom model is created via TensorFlow. In order for the model to run effici
 pip install opencv-python
 ```
 
-Smart Traffic's custom TensorFlow Lite model is provided in [TFLite_model]().
+Smart Traffic's custom TensorFlow Lite model is provided in [TFLite_model](https://github.com/sfagin89/Self-Adjusting-Traffic-System/tree/main/Custom_model/TFLite_model).
 
 ## Detailed steps on how to train custom model
 
