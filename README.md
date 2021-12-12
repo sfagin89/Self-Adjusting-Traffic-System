@@ -113,9 +113,35 @@ A smart traffic light system that is able to recognize, count, and determine the
       * This is not the intended final implementation of the traffic algorithm, just a place holder to confirm everything works.
 
 
-## Physical Prototype for Testing Setup
-![General Plan for Layout of SmartTraffic System Test](https://github.com/sfagin89/SmartTraffic/blob/main/Images/TrafficIntersectionModel.png?raw=true)
+## Physical Prototype
+### Planned General Layout
+![General Plan for Layout of SmartTraffic System Test](https://github.com/sfagin89/SmartTraffic/blob/main/Images/ExampleTrafficIntersectionModel.png?raw=true)
+*General Plan for Layout of SmartTraffic System Test*
+
 * A minimum of 2 nodes will be needed in order to demonstrate the ability of the nodes to communicate with each other, as well as show how the speeds of the lights will adjust at an intersection based on traffic at another intersection.
+
+### Building the Model
+![Partially Assembled Model](https://github.com/sfagin89/SmartTraffic/blob/main/Images/ModelMidAssembly-StreetLevelPortionOnly.jpg?raw=true)
+*Street Level Portion Of the Model Mid-Assembly*
+
+We first assembled the street level portion of the model, planning 2 intersections with one shared street. At this point in the build we had a few concerns:
+* How should the Lights and cameras be layed out to represent the a live street model as accurately as possible?
+* How would we connect the all of the lights and cameras to the raspberry pi nodes?
+* How would we allow free movement of the cars without the wiring being in the way.
+
+![General Plan for Layout of SmartTraffic System Test](https://github.com/sfagin89/SmartTraffic/blob/main/Images/PresentationModel-StreetLevelView.jpg?raw=true)
+*Presentation Model, Street Level Portion*
+
+Eventually it was decided to build a 'base' out of cardboard boxes below the street level. This allowed us to do the following:
+* Traffic Light and Cameras Wiring is kept off of the street level by feeding it through small holes next to each device on the street level portion, down into the boxes.
+* Holes between the boxes allow the wiring to be fed from one end of the model to the central box, where the Raspberry Pi Nodes and breadboards are secured, without obstructing the street level portion.
+* One side of the central box was removed to allow access to the Raspberry Pi nodes and wiring while the model is assembled.
+
+### Problems to be Worked on in Current Model Layout
+* The cardboard box based, while able to easily support the weight of the street level and allow wiring to be passed down and through, was also prone to coming apart. This made moving the model difficult, and at times introduced extra tension to the wires fed between the boxes.
+* While the breadboard and Raspberry Pi Nodes were accessible with the box side removed, wiring the breadboards was still a difficult task. Moving them from the back of the box to closer to the front would make sense in future implementations.
+* The foam boards used as the street level surface were somewhat warped. A better surface should be used for future models.
+* A way to prevent the street cameras from capturing views of cars on the streets perpendicular to them. Likely in the future cameras with a smaller angle of view will be used. Additionally, short walls along the 'sidewalks' were considered but not implemented for this model.
 
 ## Setting Up the Raspberry Pi as a Traffic Node
 Instructions to configure a raspberry pi as a Traffic Node, as well as physically setting up the pi, have been provided in the Setup_Instructions directory, [HERE](https://github.com/sfagin89/SmartTraffic/blob/main/Setup_Instructions/README.md)
